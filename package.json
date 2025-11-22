@@ -1,0 +1,17 @@
+{
+  "name": "mastei-scope",
+  "version": "1.0.0",
+  "description": "Masteï Scope project with 11ty",
+  "type": "module",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "yarn@4.5.3",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}
