@@ -1,12 +1,6 @@
 # Dependencies
 node_modules/
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.yarn/install-state.gz
 
 # Build output
 _site/
