@@ -1,0 +1,54 @@
+---
+pagination:
+  data: records
+  size: 1
+  alias: record
+permalink: "/record/{{ record.id }}/"
+layout: base.liquid
+---
+
+<article>
+  <header>
+    <h1>{{ record.title }}</h1>
+    {% if record.type %}
+      <p class="type">Type: {{ record.type }}</p>
+    {% endif %}
+  </header>
+
+  <section class="description">
+    {{ record.description | newline_to_br }}
+  </section>
+
+  {% if record.tags.size > 0 %}
+    <section class="tags">
+      <h2>Tags</h2>
+      <ul>
+        {% for tag in record.tags %}
+          <li>{{ tag }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if record.references.size > 0 %}
+    <section class="references">
+      <h2>Références</h2>
+      <ul>
+        {% for ref in record.references %}
+          <li>{{ ref }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if record.links.size > 0 %}
+    <section class="links">
+      <h2>Liens</h2>
+      <ul>
+        {% for link in record.links %}
+          <li><a href="/record/{{ link }}/">{{ link }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</article>

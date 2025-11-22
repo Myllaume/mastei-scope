@@ -1,9 +1,10 @@
-export default function(eleventyConfig) {
-  // Set input and output directories
+export default function (eleventyConfig) {
+  eleventyConfig.addPassthroughCopy('src/assets');
+
   return {
     dir: {
-      input: "src",
-      output: "_site"
-    }
+      input: 'src',
+      output: '_site',
+    },
   };
 }

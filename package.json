@@ -4,14 +4,17 @@
   "description": "Masteï Scope project with 11ty",
   "type": "module",
   "scripts": {
-    "start": "eleventy --serve",
-    "build": "eleventy"
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "yarn@4.5.3",
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.2"
+    "@11ty/eleventy": "^3.1.2",
+    "prettier": "^3.6.2"
   }
 }

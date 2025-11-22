@@ -1,0 +1,6 @@
+_site/
+node_modules/
+.yarn/
+package-lock.json
+yarn.lock
+_data
