@@ -8,6 +8,8 @@ layout: base.liquid
 ---
 
 <article>
+  <a href="/">Accueil</a>
+
   <header>
     <h1>{{ record.title }}</h1>
     {% if record.type %}
@@ -46,6 +48,17 @@ layout: base.liquid
       <h2>Liens</h2>
       <ul>
         {% for link in record.links %}
+          <li><a href="/record/{{ link }}/">{{ link }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if record.backlinks.size > 0 %}
+    <section class="links">
+      <h2>Rétroliens</h2>
+      <ul>
+        {% for link in record.backlinks %}
           <li><a href="/record/{{ link }}/">{{ link }}</a></li>
         {% endfor %}
       </ul>

@@ -3,8 +3,23 @@ layout: base.liquid
 title: Masteï
 ---
 
-# Masteï
+# Fiches
 
-{% for r in records %}
-- [{{ r.title }}](/record/{{ r.id }}/) ({{ r.type }})
+## Tags
+
+<form id="form-tags">
+{% for tag in collections.allTags %}
+  <label>
+    <input value="{{ tag }}" type="checkbox" checked>
+    {{ tag }}
+  </label>
 {% endfor %}
+</form>
+
+## Records
+
+<ul>
+{% for r in records %}
+<li class="r" data-tags="{{ r.tags | join: ',' }}"><a href="/record/{{ r.id }}/">{{ r.title }}</a></li>
+{% endfor %}
+</ul>
