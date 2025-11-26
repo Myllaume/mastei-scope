@@ -5,8 +5,6 @@ title: Masteï
 
 # Fiches
 
-## Tags
-
 <form id="form-tags">
 {% for tag in collections.allTags %}
   <label>
@@ -16,10 +14,12 @@ title: Masteï
 {% endfor %}
 </form>
 
-## Records
+<input type="search" placeholder="Rechercher une fiche..." />
 
-<ul>
+<ul class="records-list">
 {% for r in records %}
 <li class="r" data-tags="{{ r.tags | join: ',' }}"><a href="/record/{{ r.id }}/">{{ r.title }}</a></li>
 {% endfor %}
 </ul>
+
+<script type="module" src="/assets/search.js"></script>

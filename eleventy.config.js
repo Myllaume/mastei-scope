@@ -1,5 +1,8 @@
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('src/assets');
+  eleventyConfig.addPassthroughCopy({
+    'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',
+  });
 
   // Calculer tous les tags uniques triés
   eleventyConfig.addCollection('allTags', function (collectionApi) {

@@ -85,6 +85,34 @@ input[type='checkbox'] {
   accent-color: rgb(35, 131, 226);
 }
 
+input[type='search'] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: rgb(55, 53, 47);
+  background-color: rgb(247, 246, 243);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+input[type='search']::placeholder {
+  color: rgb(155, 154, 151);
+}
+
+input[type='search']:hover {
+  background-color: rgb(239, 238, 234);
+}
+
+input[type='search']:focus {
+  background-color: white;
+  border-color: rgb(35, 131, 226);
+  box-shadow: 0 0 0 1px rgb(35, 131, 226);
+}
+
 form {
   display: flex;
   flex-wrap: wrap;
@@ -97,6 +125,10 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+ul.records-list {
+  min-height: 80vh;
 }
 
 li.r {
