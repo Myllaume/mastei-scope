@@ -18,7 +18,7 @@ title: Masteï
 
 <ul class="records-list">
 {% for r in records %}
-<li class="r" data-tags="{{ r.tags | join: ',' }}"><a href="/record/{{ r.id }}/">{{ r.title }}</a></li>
+<li class="r" data-tags="{{ r.tags | join: ',' }}"><a href="/records/{{ r.id }}/">{{ r.title }}</a></li>
 {% endfor %}
 </ul>
 

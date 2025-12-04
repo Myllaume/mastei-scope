@@ -1,0 +1,22 @@
+---
+pagination:
+  data: records_by_year
+  size: 1
+  alias: year
+permalink: "/years/{{ year.key }}/"
+layout: base.liquid
+eleventyComputed:
+  title: "{{ year.key }}"
+---
+
+<article>
+  <header>
+    <h1>{{ year.key }}</h1>
+  </header>
+
+  <ul>
+    {% for record in year.records %}
+      <li><a href="/records/{{ record.id }}">{{ record.title }}</a></li>
+    {% endfor %}
+  </ul>
+</article>

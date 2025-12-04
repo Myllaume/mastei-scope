@@ -3,13 +3,13 @@ pagination:
   data: records
   size: 1
   alias: record
-permalink: "/record/{{ record.id }}/"
+permalink: "/records/{{ record.id }}/"
 layout: base.liquid
+eleventyComputed:
+  title: "{{ record.title }}"
 ---
 
 <article>
-  <a href="/">Accueil</a>
-
   <header>
     <h1>{{ record.title }}</h1>
     {% if record.type %}
@@ -26,18 +26,7 @@ layout: base.liquid
       <h2>Tags</h2>
       <ul>
         {% for tag in record.tags %}
-          <li>{{ tag }}</li>
-        {% endfor %}
-      </ul>
-    </section>
-  {% endif %}
-
-  {% if record.references.size > 0 %}
-    <section class="references">
-      <h2>Références</h2>
-      <ul>
-        {% for ref in record.references %}
-          <li>{{ ref }}</li>
+          <li><a href="/tags/{{ tag }}">{{ tag }}</a></li>
         {% endfor %}
       </ul>
     </section>
@@ -48,7 +37,7 @@ layout: base.liquid
       <h2>Liens</h2>
       <ul>
         {% for link in record.links %}
-          <li><a href="/record/{{ link }}/">{{ link }}</a></li>
+          <li><a href="/records/{{ link }}/">{{ link }}</a></li>
         {% endfor %}
       </ul>
     </section>
@@ -59,7 +48,7 @@ layout: base.liquid
       <h2>Rétroliens</h2>
       <ul>
         {% for link in record.backlinks %}
-          <li><a href="/record/{{ link }}/">{{ link }}</a></li>
+          <li><a href="/records/{{ link }}/">{{ link }}</a></li>
         {% endfor %}
       </ul>
     </section>

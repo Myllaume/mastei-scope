@@ -131,17 +131,17 @@ ul.records-list {
   min-height: 80vh;
 }
 
-li.r {
+li {
   margin: 2px 0;
   border-radius: 4px;
   transition: background-color 0.15s ease;
 }
 
-li.r:hover {
+li:hover {
   background-color: rgb(247, 246, 243);
 }
 
-li.r a {
+li a {
   display: block;
   padding: 8px 12px;
   color: rgb(55, 53, 47);
@@ -150,7 +150,7 @@ li.r a {
   font-weight: 400;
 }
 
-li.r a:hover {
+li a:hover {
   text-decoration: underline;
 }
 
@@ -309,7 +309,6 @@ section h2 {
 }
 
 .tags li {
-  padding: 4px 12px;
   background-color: rgb(247, 246, 243);
   border-radius: 6px;
   font-size: 14px;
@@ -346,4 +345,9 @@ section h2 {
 
 .links a:hover {
   text-decoration: underline;
+}
+
+.link-badge {
+  display: inline-block;
+  color: hsl(45, 8%, 60%);
 }

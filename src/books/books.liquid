@@ -1,0 +1,22 @@
+---
+pagination:
+  data: records_by_book
+  size: 1
+  alias: book
+permalink: "/books/{{ book.key }}/"
+layout: base.liquid
+eleventyComputed:
+  title: "{{ book.key }}"
+---
+
+<article>
+  <header>
+    <h1>{{ book.key }}</h1>
+  </header>
+
+  <ul>
+    {% for record in book.records %}
+      <li><a href="/records/{{ record.id }}">{{ record.title }}</a></li>
+    {% endfor %}
+  </ul>
+</article>

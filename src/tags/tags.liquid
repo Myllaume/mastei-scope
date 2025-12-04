@@ -1,0 +1,22 @@
+---
+pagination:
+  data: records_by_tag
+  size: 1
+  alias: tag
+permalink: "/tags/{{ tag.key }}/"
+layout: base.liquid
+eleventyComputed:
+  title: "{{ tag.key }}"
+---
+
+<article>
+  <header>
+    <h1>{{ tag.key }}</h1>
+  </header>
+
+  <ul>
+    {% for record in tag.records %}
+      <li><a href="/records/{{ record.id }}">{{ record.title }}</a></li>
+    {% endfor %}
+  </ul>
+</article>

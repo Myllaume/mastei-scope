@@ -1,8 +1,7 @@
 ---
 layout: base.liquid
+title: Table
 ---
-
-# Statistiques des fiches
 
 <table>
   <caption>
@@ -15,7 +14,8 @@ layout: base.liquid
       <th scope="col">liens</th>
       <th scope="col">rétroliens</th>
       <th scope="col">dates</th>
-      <th scope="col">caractères</th>
+      <th scope="col">mots</th>
+      <th scope="col">citations</th>
     </tr>
   </thead>
   <tbody>
@@ -23,12 +23,13 @@ layout: base.liquid
 {% for r in records %}
 
   <tr>
-    <th scope="row"><a href="/record/{{ r.id }}" target="_blank">{{ r.title }}</a></th>
+    <th scope="row"><a href="/records/{{ r.id }}" target="_blank">{{ r.title }}</a></th>
     <td>{{ r.tags | size }}</td>
     <td>{{ r.links | size }}</td>
     <td>{{ r.backlinks | size }}</td>
     <td>{{ r.dates | size }}</td>
-    <td>{{ r.description | size }}</td>
+    <td>{{ r.description | number_of_words }}</td>
+    <td>{{ r.quotes | size }}</td>
   </tr>
   {% endfor %}
     
