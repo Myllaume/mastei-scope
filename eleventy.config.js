@@ -1,4 +1,17 @@
+import markdownIt from 'markdown-it';
+
 export default function (eleventyConfig) {
+  const md = markdownIt({
+    html: true,
+    breaks: false,
+    linkify: true,
+  });
+
+  eleventyConfig.addFilter('br_to_paragraph', function (content) {
+    const normalizedContent = content.replace(/([^\n])\n([^\n])/g, '$1\n\n$2');
+    return md.render(normalizedContent);
+  });
+
   eleventyConfig.addPassthroughCopy('src/assets');
   eleventyConfig.addPassthroughCopy({
     'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',

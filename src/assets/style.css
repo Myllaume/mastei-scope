@@ -351,3 +351,15 @@ section h2 {
   display: inline-block;
   color: hsl(45, 8%, 60%);
 }
+
+.serif {
+  font-family: Georgia, serif;
+}
+
+.prose {
+  font-family: Georgia, serif;
+}
+
+.context {
+  padding: 12px 16px;
+}

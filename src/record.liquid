@@ -17,8 +17,8 @@ eleventyComputed:
     {% endif %}
   </header>
 
-  <section class="description">
-    {{ record.description | newline_to_br }}
+  <section class="description serif prose">
+    {{ record.description | br_to_paragraph }}
   </section>
 
   {% if record.tags.size > 0 %}
@@ -32,23 +32,41 @@ eleventyComputed:
     </section>
   {% endif %}
 
-  {% if record.links.size > 0 %}
-    <section class="links">
-      <h2>Liens</h2>
-      <ul>
-        {% for link in record.links %}
-          <li><a href="/records/{{ link }}/">{{ link }}</a></li>
-        {% endfor %}
-      </ul>
-    </section>
-  {% endif %}
-
   {% if record.backlinks.size > 0 %}
     <section class="links">
       <h2>Rétroliens</h2>
       <ul>
         {% for link in record.backlinks %}
-          <li><a href="/records/{{ link }}/">{{ link }}</a></li>
+          <li>
+            <a href="/records/{{ link.id }}/">{{ link.title }}</a>
+            {% if link.context.size > 0 %}
+              {% for context in link.context %}
+                <p class="context serif">{{ context }}</p>
+              {% endfor %}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if record.links.size > 0 %}
+    <section class="links">
+      <h2>Liens</h2>
+      <ul>
+        {% for link in record.links %}
+          <li><a href="/records/{{ link.id }}/">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if record.books.size > 0 %}
+    <section class="links">
+      <h2>Livres</h2>
+      <ul>
+        {% for book in record.books %}
+          <li><a href="/books/{{ book }}/">{{ book }}</a></li>
         {% endfor %}
       </ul>
     </section>
