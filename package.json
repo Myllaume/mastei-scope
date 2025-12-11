@@ -4,7 +4,7 @@
   "description": "Masteï Scope project with 11ty",
   "type": "module",
   "scripts": {
-    "dev": "eleventy --serve",
+    "dev": "eleventy --serve --quiet",
     "build": "eleventy",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
