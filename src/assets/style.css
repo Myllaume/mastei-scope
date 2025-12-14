@@ -360,6 +360,10 @@ section h2 {
   font-family: Georgia, serif;
 }
 
+.prose a {
+  text-decoration: underline;
+}
+
 .context {
   padding: 12px 16px;
 }
@@ -376,4 +380,10 @@ section h2 {
 
 footer {
   border-top: 1px solid rgb(233, 233, 231);
+  padding-top: 1em;
+}
+
+summary {
+  cursor: pointer;
+  margin-bottom: 24px;
 }

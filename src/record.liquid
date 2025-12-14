@@ -22,58 +22,66 @@ eleventyComputed:
   </header>
 
   <section class="description serif prose">
-    {{ record.description | br_to_paragraph }}
+    {{ record.description | frenchQuotes | links_html: record.links | br_to_paragraph }}
   </section>
 
   <footer>
-    {% if record.tags.size > 0 %}
-      <section class="tags">
-        <h2>Tags</h2>
-        <ul>
-          {% for tag in record.tags %}
-            <li><a href="/tags/{{ tag }}">{{ tag }}</a></li>
-          {% endfor %}
-        </ul>
-      </section>
-    {% endif %}
-
     {% if record.backlinks.size > 0 %}
       <section class="links">
-        <h2>Rétroliens</h2>
-        <ul>
-          {% for link in record.backlinks %}
-            <li>
-              <a href="/records/{{ link.id }}/">{{ link.title }}</a>
-              {% if link.context.size > 0 %}
-                {% for context in link.context %}
-                  <p class="context serif">{{ context }}</p>
-                {% endfor %}
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
+        <details open>
+          <summary>Rétroliens</summary>
+          <ul>
+            {% for link in record.backlinks %}
+              <li>
+                <a href="/records/{{ link.id }}/">{{ link.title }}</a>
+                {% if link.context.size > 0 %}
+                  {% for context in link.context %}
+                    <p class="context serif">{{ context }}</p>
+                  {% endfor %}
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </details>
       </section>
     {% endif %}
 
     {% if record.links.size > 0 %}
       <section class="links">
-        <h2>Liens</h2>
-        <ul>
-          {% for link in record.links %}
-            <li><a href="/records/{{ link.id }}/">{{ link.title }}</a></li>
-          {% endfor %}
-        </ul>
+        <details>
+          <summary>Liens</summary>
+          <ul>
+            {% for link in record.links %}
+              <li><a href="/records/{{ link.id }}/">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </details>
+      </section>
+    {% endif %}
+
+    {% if record.tags.size > 0 %}
+      <section class="tags">
+        <details>
+          <summary>Tags</summary>
+          <ul>
+            {% for tag in record.tags %}
+              <li><a href="/tags/{{ tag }}">{{ tag }}</a></li>
+            {% endfor %}
+          </ul>
+        </details>
       </section>
     {% endif %}
 
     {% if record.books.size > 0 %}
       <section class="links">
-        <h2>Livres</h2>
-        <ul>
-          {% for book in record.books %}
-            <li><a href="/books/{{ book }}/">{{ book }}</a></li>
-          {% endfor %}
-        </ul>
+        <details>
+          <summary>Livres</summary>
+          <ul>
+            {% for book in record.books %}
+              <li><a href="/books/{{ book }}/">{{ book }}</a></li>
+            {% endfor %}
+          </ul>
+        </details>
       </section>
     {% endif %}
   </footer>

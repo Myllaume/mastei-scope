@@ -22,23 +22,13 @@ const fuse = new Fuse(data, {
 
 // Gestion de la recherche
 const searchInput = document.querySelector('input[type="search"]');
-const tagCheckboxes = document.querySelectorAll(
-  '#form-tags input[type="checkbox"]'
-);
 
 function filterList() {
   const searchTerm = searchInput.value.trim();
-  const selectedTags = Array.from(tagCheckboxes)
-    .filter((cb) => cb.checked)
-    .map((cb) => cb.value);
 
   // Si pas de recherche, utiliser le filtrage par tags classique
   if (!searchTerm) {
-    items.forEach((item) => {
-      const itemTags = item.dataset.tags.split(',').filter((t) => t);
-      const hasSelectedTag = itemTags.some((tag) => selectedTags.includes(tag));
-      item.style.display = hasSelectedTag ? '' : 'none';
-    });
+    items.forEach((item) => (item.style.display = ''));
     return;
   }
 
@@ -51,17 +41,11 @@ function filterList() {
   // Afficher les résultats qui correspondent aussi aux tags sélectionnés
   results.forEach((result) => {
     const item = result.item.element;
-    const itemTags = item.dataset.tags.split(',').filter((t) => t);
-    const hasSelectedTag = itemTags.some((tag) => selectedTags.includes(tag));
 
-    if (hasSelectedTag) {
-      item.style.display = '';
-    }
+    item.style.display = '';
   });
 }
 
 // Écouteurs d'événements
+filterList();
 searchInput.addEventListener('input', filterList);
-tagCheckboxes.forEach((checkbox) => {
-  checkbox.addEventListener('change', filterList);
-});
