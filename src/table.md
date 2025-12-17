@@ -3,10 +3,10 @@ layout: base.liquid
 title: Table
 ---
 
+<h1>Récapitulatif des fiches</h1>
+
 <table>
-  <caption>
-    Front-end web developer course 2021
-  </caption>
+  <caption>Statistiques générales</caption>
   <thead>
     <tr>
       <th scope="col">Titre</th>
@@ -21,8 +21,7 @@ title: Table
   </thead>
   <tbody>
 
-{% for r in records %}
-
+  {% for r in records %}
   <tr>
     <th scope="row"><a href="/records/{{ r.id }}" target="_blank">{{ r.title }}</a></th>
     <td>{{ r.line }}</td>

@@ -32,7 +32,8 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter('frenchQuotes', function (content) {
     // Remplace les guillemets doubles par des guillemets français avec espaces fines insécables
-    content = content.replace(/"([^"]*)"/g, '«\u202F$1\u202F»');
+    // mais uniquement en dehors des balises HTML
+    content = content.replace(/"([^"]*)"(?![^<]*>)/g, '«\u202F$1\u202F»');
     // Remplace les apostrophes droites par des apostrophes typographiques
     content = content.replace(/'/g, '\u2019');
     

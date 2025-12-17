@@ -15,28 +15,24 @@ eleventyComputed:
     {% if record.alias.size > 0 %}
     <h2 class="subtitle">{{ record.alias | join: " • " }}</h2>
     {% endif %}
-    {% if record.type %}
-      <p class="type">Type: {{ record.type }}</p>
-      <p class="type">Ligne: <span class="monospace">{{ record.line }}</span></p>
-    {% endif %}
   </header>
 
-  <section class="description serif prose">
-    {{ record.description | frenchQuotes | links_html: record.links | br_to_paragraph }}
+  <section class="prose">
+    {{ record.description | links_html: record.links | frenchQuotes | br_to_paragraph }}
   </section>
 
   <footer>
     {% if record.backlinks.size > 0 %}
       <section class="links">
         <details open>
-          <summary>Rétroliens</summary>
+          <summary>Rétroliens ({{ record.backlinks.size }})</summary>
           <ul>
             {% for link in record.backlinks %}
               <li>
                 <a href="/records/{{ link.id }}/">{{ link.title }}</a>
                 {% if link.context.size > 0 %}
                   {% for context in link.context %}
-                    <p class="context serif">{{ context }}</p>
+                    <p class="prose">{{ context | frenchQuotes }}</p>
                   {% endfor %}
                 {% endif %}
               </li>
@@ -49,7 +45,7 @@ eleventyComputed:
     {% if record.links.size > 0 %}
       <section class="links">
         <details>
-          <summary>Liens</summary>
+          <summary>Liens ({{ record.links.size }})</summary>
           <ul>
             {% for link in record.links %}
               <li><a href="/records/{{ link.id }}/">{{ link.title }}</a></li>
@@ -62,7 +58,7 @@ eleventyComputed:
     {% if record.tags.size > 0 %}
       <section class="tags">
         <details>
-          <summary>Tags</summary>
+          <summary>Tags ({{ record.tags.size }})</summary>
           <ul>
             {% for tag in record.tags %}
               <li><a href="/tags/{{ tag }}">{{ tag }}</a></li>
@@ -75,7 +71,7 @@ eleventyComputed:
     {% if record.books.size > 0 %}
       <section class="links">
         <details>
-          <summary>Livres</summary>
+          <summary>Livres ({{ record.books.size }})</summary>
           <ul>
             {% for book in record.books %}
               <li><a href="/books/{{ book }}/">{{ book }}</a></li>
