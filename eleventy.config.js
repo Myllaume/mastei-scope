@@ -24,7 +24,10 @@ export default function (eleventyConfig) {
 
       const escapedAnchor = escapeRegExp(link.anchor);
       const regex = new RegExp(`\\b(${escapedAnchor})\\b`, 'g');
-      content = content.replace(regex, `<a href="/records/${link.id}" title="${link.title}">$1</a>`);
+      content = content.replace(
+        regex,
+        `<a href="/records/${link.id}" title="${link.title}">$1</a>`
+      );
     }
 
     return content;
@@ -36,25 +39,26 @@ export default function (eleventyConfig) {
     content = content.replace(/"([^"]*)"(?![^<]*>)/g, '«\u202F$1\u202F»');
     // Remplace les apostrophes droites par des apostrophes typographiques
     content = content.replace(/'/g, '\u2019');
-    
+
     // Espaces insécables avant la ponctuation double
     // Espace fine insécable (U+202F) avant ; ! ?
     content = content.replace(/\s*([;!?])/g, '\u202F$1');
     // Espace normale insécable (U+00A0) avant :
     content = content.replace(/\s*(:)/g, '\u00A0$1');
-    
+
     // Espaces insécables avant %, °, et entre chiffres et unités courantes
     content = content.replace(/(\d)\s*([%°])/g, '$1\u00A0$2');
     // Unités courantes (km, m, kg, etc.)
-    content = content.replace(/(\d)\s*(km|m|cm|mm|kg|g|mg|L|ml|h|min|s)\b/g, '$1\u00A0$2');
-    
+    content = content.replace(
+      /(\d)\s*(km|m|cm|mm|kg|g|mg|L|ml|h|min|s)\b/g,
+      '$1\u00A0$2'
+    );
+
     // Ordinaux en exposant
     content = content.replace(/(\d+)(er|ère|e|ème|è)/g, '$1<sup>$2</sup>');
-    
+
     return content;
   });
-
-
 
   eleventyConfig.addPassthroughCopy('src/assets');
   eleventyConfig.addPassthroughCopy({

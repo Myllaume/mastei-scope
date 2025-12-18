@@ -15,6 +15,7 @@ title: Dates
 </nav>
 
 {%- for group in yearGroups %}
+
 <section id="year-{{ group.name }}">
     <h2>{{ group.name }}</h2>
     <ul>
