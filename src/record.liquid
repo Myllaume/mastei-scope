@@ -18,7 +18,7 @@ eleventyComputed:
   </header>
 
   <section class="prose">
-    {{ record.description | links_html: record.links | frenchQuotes | br_to_paragraph }}
+    {{ record.description | links_html: record.links  | br_to_paragraph }}
   </section>
 
   <footer>
@@ -31,9 +31,9 @@ eleventyComputed:
               <li>
                 <a href="/records/{{ link.id }}/">{{ link.title }}</a>
                 {% if link.context.size > 0 %}
-                  {% for context in link.context %}
+                  {%- for context in link.context -%}
                     <p class="prose">{{ context | frenchQuotes }}</p>
-                  {% endfor %}
+                  {%- endfor -%}
                 {% endif %}
               </li>
             {% endfor %}
@@ -47,9 +47,9 @@ eleventyComputed:
         <details>
           <summary>Liens ({{ record.links.size }})</summary>
           <ul>
-            {% for link in record.links %}
+            {%- for link in record.links -%}
               <li><a href="/records/{{ link.id }}/">{{ link.title }}</a></li>
-            {% endfor %}
+            {%- endfor -%}
           </ul>
         </details>
       </section>
@@ -60,9 +60,9 @@ eleventyComputed:
         <details>
           <summary>Tags ({{ record.tags.size }})</summary>
           <ul>
-            {% for tag in record.tags %}
+            {%- for tag in record.tags -%}
               <li><a href="/tags/{{ tag }}">{{ tag }}</a></li>
-            {% endfor %}
+            {%- endfor -%}
           </ul>
         </details>
       </section>
@@ -73,9 +73,9 @@ eleventyComputed:
         <details>
           <summary>Livres ({{ record.books.size }})</summary>
           <ul>
-            {% for book in record.books %}
+            {%- for book in record.books -%}
               <li><a href="/books/{{ book }}/">{{ book }}</a></li>
-            {% endfor %}
+            {%- endfor -%}
           </ul>
         </details>
       </section>
