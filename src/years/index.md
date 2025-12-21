@@ -8,7 +8,7 @@ title: Années
 <li>
     <a href="/years/{{ item.key }}">
         {{ item.key }}
-        <span class="link-badge">({{ item.records | size }})</span>
+        <span>({{ item.records | size }})</span>
     </a>
 </li>
 {% endfor %}

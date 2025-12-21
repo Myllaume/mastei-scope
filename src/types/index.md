@@ -8,7 +8,7 @@ title: Types
 <li>
     <a href="/types/{{ item.key }}">
         {{ item.key }}
-        <span class="link-badge">({{ item.records | size }})</span>
+        <span>({{ item.records | size }})</span>
     </a>
 </li>
 {% endfor %}

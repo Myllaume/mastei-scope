@@ -8,7 +8,7 @@ title: Tags
 <li>
     <a href="/tags/{{ item.key }}">
         {{ item.key }}
-        <span class="link-badge">({{ item.records | size }})</span>
+        <span>({{ item.records | size }})</span>
     </a>
 </li>
 {% endfor %}

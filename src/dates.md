@@ -5,7 +5,7 @@ title: Dates
 
 {%- assign yearGroups = dates | group_by: "date.year" -%}
 
-<nav class="year-nav">
+<nav>
 <h2>Navigation par année</h2>
     <ul>
         {%- for group in yearGroups %}

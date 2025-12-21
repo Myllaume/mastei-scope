@@ -1,14 +1,12 @@
 import Fuse from '/assets/fuse.mjs';
 
 // Récupérer tous les éléments de la liste
-const items = Array.from(document.querySelectorAll('.r'));
+const items = Array.from(document.querySelectorAll('ul a'));
 
 // Préparer les données pour Fuse.js
 const data = items.map((item) => {
-  const link = item.querySelector('a');
   return {
-    title: link.textContent.trim(),
-    tags: item.dataset.tags || '',
+    title: item.textContent.split('•'),
     element: item,
   };
 });

@@ -13,17 +13,18 @@ eleventyComputed:
   <header>
     <h1>{{ record.title }}</h1>
     {% if record.alias.size > 0 %}
-    <h2 class="subtitle">{{ record.alias | join: " • " }}</h2>
+    <h2>{{ record.alias | join: " • " }}</h2>
     {% endif %}
+    <samp>line {{ record.line }}</samp>
   </header>
 
   <section class="prose">
-    {{ record.description | links_html: record.links  | br_to_paragraph }}
+    {{ record.description | links_html: record.links | frenchQuotes | br_to_paragraph }}
   </section>
 
   <footer>
     {% if record.backlinks.size > 0 %}
-      <section class="links">
+      <section>
         <details open>
           <summary>Rétroliens ({{ record.backlinks.size }})</summary>
           <ul>
@@ -43,7 +44,7 @@ eleventyComputed:
     {% endif %}
 
     {% if record.links.size > 0 %}
-      <section class="links">
+      <section>
         <details>
           <summary>Liens ({{ record.links.size }})</summary>
           <ul>
@@ -56,7 +57,7 @@ eleventyComputed:
     {% endif %}
 
     {% if record.tags.size > 0 %}
-      <section class="tags">
+      <section>
         <details>
           <summary>Tags ({{ record.tags.size }})</summary>
           <ul>
@@ -69,7 +70,7 @@ eleventyComputed:
     {% endif %}
 
     {% if record.books.size > 0 %}
-      <section class="links">
+      <section>
         <details>
           <summary>Livres ({{ record.books.size }})</summary>
           <ul>
