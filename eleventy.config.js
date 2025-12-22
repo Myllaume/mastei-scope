@@ -45,8 +45,6 @@ export default function (eleventyConfig) {
     content = content.replace(/\s*([;!?])/g, '\u202F$1');
     // Espace normale insécable (U+00A0) avant :
     content = content.replace(/\s*(:)/g, '\u00A0$1');
-    // Espace normale insécable (U+00A0) avant "p.43"
-    content = content.replace(/\s*((p.\d+))/g, '\u00A0$1');
 
     // Espaces insécables avant %, °, et entre chiffres et unités courantes
     content = content.replace(/(\d)\s*([%°])/g, '$1\u00A0$2');
@@ -60,6 +58,55 @@ export default function (eleventyConfig) {
     content = content.replace(/(\d+)(er|ère|e|ème|è)/g, '$1<sup>$2</sup>');
 
     return content;
+  });
+
+  const quoteRegex = /\(([^)]*\b[A-Z][a-z]+\d+\s+p\.\d+[^)]*)\)/g;
+
+  eleventyConfig.addFilter('bibliographyIndex', function (content) {
+    // Transforme les références bibliographiques en numéros d'index incrémentés
+    // Format: (Auteur Année p.page) ou (Auteur Année p.page ; Auteur Année p.page)
+    // Remplace par des numéros: 1, 2, 3, ...
+
+    let indexCounter = 0;
+
+    // Regex qui capture les références bibliographiques au format (Auteur Année p.xxx)
+    // Peut contenir plusieurs références séparées par " ; "
+
+    content = content.replace(quoteRegex, () => {
+      indexCounter++;
+      return `<sup><a id="fnref-${indexCounter}" href="#fn-${indexCounter}">${indexCounter}</a></sup>`;
+    });
+
+    return content;
+  });
+
+  eleventyConfig.addFilter('bibliographyFootnotes', function (content) {
+    // Extrait les références bibliographiques et les formate comme des notes de bas de page
+    // Utilise le même système de numérotation que le filtre bibliographyIndex
+
+    const references = [];
+
+    let match;
+    while ((match = quoteRegex.exec(content)) !== null) {
+      // match[1] contient le contenu entre parenthèses
+      const refContent = match[1];
+      references.push(refContent);
+    }
+
+    if (references.length === 0) {
+      return '';
+    }
+
+    // Formate les références comme des notes de bas de page avec ancres et lien de retour
+    let footnotes =
+      '<ol>';
+    references.forEach((ref, index) => {
+      const n = index + 1;
+      footnotes += `<li id="fn-${n}">${ref} <a href="#fnref-${n}" aria-label="Retour au texte">↩︎</a></li>\n`;
+    });
+    footnotes += '</ol>';
+
+    return footnotes;
   });
 
   eleventyConfig.addPassthroughCopy('src/assets');

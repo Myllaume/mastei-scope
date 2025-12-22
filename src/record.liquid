@@ -19,7 +19,7 @@ eleventyComputed:
   </header>
 
   <section class="prose">
-    {{ record.description | links_html: record.links | frenchQuotes | br_to_paragraph }}
+    {{ record.description | links_html: record.links | frenchQuotes | bibliographyIndex | br_to_paragraph }}
   </section>
 
   <footer>
@@ -79,6 +79,13 @@ eleventyComputed:
       </details>
     </section>
     {% endif %}
+
+    <section>
+      <details>
+        <summary>Notes de bas de page</summary>
+        {{ record.description | bibliographyFootnotes }}
+      </details>
+    </section>
 
     {% if record.tags.size > 0 %}
       <section>
