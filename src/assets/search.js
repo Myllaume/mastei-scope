@@ -16,6 +16,7 @@ const fuse = new Fuse(data, {
   keys: ['title'],
   threshold: 0.3,
   includeScore: true,
+  ignoreDiacritics: true,
 });
 
 // Gestion de la recherche

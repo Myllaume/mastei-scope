@@ -45,6 +45,8 @@ export default function (eleventyConfig) {
     content = content.replace(/\s*([;!?])/g, '\u202F$1');
     // Espace normale insécable (U+00A0) avant :
     content = content.replace(/\s*(:)/g, '\u00A0$1');
+    // Espace normale insécable (U+00A0) avant "p.43"
+    content = content.replace(/\s*((p.\d+))/g, '\u00A0$1');
 
     // Espaces insécables avant %, °, et entre chiffres et unités courantes
     content = content.replace(/(\d)\s*([%°])/g, '$1\u00A0$2');
