@@ -19,7 +19,7 @@ eleventyComputed:
   </header>
 
   <section class="prose">
-    {{ record.description | links_html: record.links | frenchQuotes | bibliographyIndex | br_to_paragraph }}
+    {{ record.description | links_html: record.links | frenchQuotes | bibliographyIndex: record | br_to_paragraph }}
   </section>
 
   <footer>
@@ -33,7 +33,7 @@ eleventyComputed:
                 <a href="/records/{{ link.id }}/">{{ link.title }}</a>
                 {% if link.context.size > 0 %}
                   {%- for context in link.context -%}
-                    <p class="prose">{{ context | frenchQuotes }}</p>
+                    <p class="prose">{{ context | frenchQuotes | bibliographyIndex: record }}</p>
                   {%- endfor -%}
                 {% endif %}
               </li>

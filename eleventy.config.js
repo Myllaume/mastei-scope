@@ -64,7 +64,7 @@ export default function (eleventyConfig) {
 
   const quoteRegex = /\(([^)]*\b[A-Z][a-z]+\d+\s+p\.\d+[^)]*)\)/g;
 
-  eleventyConfig.addFilter('bibliographyIndex', function (content) {
+  eleventyConfig.addFilter('bibliographyIndex', function (content, record) {
     // Transforme les références bibliographiques en numéros d'index incrémentés
     // Format: (Auteur Année p.page) ou (Auteur Année p.page ; Auteur Année p.page)
     // Remplace par des numéros: 1, 2, 3, ...
@@ -76,7 +76,7 @@ export default function (eleventyConfig) {
 
     content = content.replace(quoteRegex, () => {
       indexCounter++;
-      return `<sup><a id="fnref-${indexCounter}" href="#fn-${indexCounter}">${indexCounter}</a></sup>`;
+      return `<sup><a id="fnref-${indexCounter}" href="/records/${record.id}/#fn-${indexCounter}">${indexCounter}</a></sup>`;
     });
 
     return content;
