@@ -11,7 +11,7 @@ eleventyComputed:
 
 <article>
   <header>
-    <h1>{{ record.title }}</h1>
+    <h1>{{ record.title | frenchQuotes }}</h1>
     {% if record.alias.size > 0 %}
     <h2>{{ record.alias | join: " • " }}</h2>
     {% endif %}
