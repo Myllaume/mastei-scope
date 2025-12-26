@@ -19,33 +19,59 @@ export default function (eleventyConfig) {
     return md.render(normalizedContent);
   });
 
-  eleventyConfig.addFilter('links_html', function (content, links) {
-    // Trier les liens par longueur décroissante pour traiter les expressions longues avant les courtes
-    const sortedLinks = links
-      .filter((link) => link.anchor)
-      .sort((a, b) => b.anchor.length - a.anchor.length);
+  eleventyConfig.addFilter('links_html', function (content, record) {
+    // Combiner les liens et les dates dans une liste unique, triée par longueur décroissante
+    const allItems = [];
 
-    // Utiliser un marqueur unique pour protéger les zones déjà transformées
+    // Ajouter les liens
+    if (record.links && Array.isArray(record.links)) {
+      record.links.forEach((link) => {
+        if (link.anchor) {
+          allItems.push({
+            text: link.anchor,
+            html: `<a href="/records/${link.id}" title="${link.title}">${link.anchor}</a>`,
+            length: link.anchor.length,
+          });
+        }
+      });
+    }
+
+    // Ajouter les dates
+    if (record.dates && Array.isArray(record.dates)) {
+      record.dates.forEach((dateObj) => {
+        if (dateObj.inline) {
+          const dateString = `${dateObj.date.day}-${dateObj.date.month}-${dateObj.date.year}`;
+          allItems.push({
+            text: dateObj.inline,
+            html: `<a href="/dates/#${dateString}">${dateObj.inline}</a>`,
+            length: dateObj.inline.length,
+          });
+        }
+      });
+    }
+
+    // Trier par longueur décroissante pour traiter les expressions longues avant les courtes
+    allItems.sort((a, b) => b.length - a.length);
 
     const replacements = [];
 
-    // Premier passage : remplacer les anchors par des placeholders
-    for (let i = 0; i < sortedLinks.length; i++) {
-      const link = sortedLinks[i];
-      const escapedAnchor = escapeRegExp(link.anchor);
-      const regex = new RegExp(`\\b(${escapedAnchor})\\b`, 'g');
+    // Remplacer tous les éléments par des placeholders
+    for (let i = 0; i < allItems.length; i++) {
+      const item = allItems[i];
+      const escapedText = escapeRegExp(item.text);
+      const regex = new RegExp(`\\b(${escapedText})\\b`, 'g');
       const placeholder = `${PLACEHOLDER_PREFIX}${i}${PLACEHOLDER_SUFFIX}`;
 
       content = content.replace(regex, (match) => {
         replacements.push({
           placeholder,
-          html: `<a href="/records/${link.id}" title="${link.title}">${match}</a>`,
+          html: item.html,
         });
         return placeholder;
       });
     }
 
-    // Second passage : restaurer les placeholders par les vrais liens
+    // Restaurer les placeholders par les vrais liens
     for (const replacement of replacements) {
       content = content.replace(replacement.placeholder, replacement.html);
     }

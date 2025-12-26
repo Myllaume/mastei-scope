@@ -21,7 +21,7 @@ title: Dates
     <ul>
     {%- for d in group.items %}
         <li>
-        <h3>{{ d.inline }}</h3>
+        <h3 id="{{ d.date.day }}-{{ d.date.month }}-{{ d.date.year }}">{{ d.inline }}</h3>
         <ul>
         {%- for r in d.records %}
         <li>
