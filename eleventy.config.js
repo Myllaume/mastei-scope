@@ -4,6 +4,9 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+const PLACEHOLDER_PREFIX = '_LINK_';
+const PLACEHOLDER_SUFFIX = '_';
+
 export default function (eleventyConfig) {
   const md = markdownIt({
     html: true,
@@ -17,17 +20,34 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter('links_html', function (content, links) {
-    for (const link of links) {
-      if (!link.anchor) {
-        continue;
-      }
+    // Trier les liens par longueur décroissante pour traiter les expressions longues avant les courtes
+    const sortedLinks = links
+      .filter((link) => link.anchor)
+      .sort((a, b) => b.anchor.length - a.anchor.length);
 
+    // Utiliser un marqueur unique pour protéger les zones déjà transformées
+
+    const replacements = [];
+
+    // Premier passage : remplacer les anchors par des placeholders
+    for (let i = 0; i < sortedLinks.length; i++) {
+      const link = sortedLinks[i];
       const escapedAnchor = escapeRegExp(link.anchor);
       const regex = new RegExp(`\\b(${escapedAnchor})\\b`, 'g');
-      content = content.replace(
-        regex,
-        `<a href="/records/${link.id}" title="${link.title}">$1</a>`
-      );
+      const placeholder = `${PLACEHOLDER_PREFIX}${i}${PLACEHOLDER_SUFFIX}`;
+
+      content = content.replace(regex, (match) => {
+        replacements.push({
+          placeholder,
+          html: `<a href="/records/${link.id}" title="${link.title}">${match}</a>`,
+        });
+        return placeholder;
+      });
+    }
+
+    // Second passage : restaurer les placeholders par les vrais liens
+    for (const replacement of replacements) {
+      content = content.replace(replacement.placeholder, replacement.html);
     }
 
     return content;
@@ -36,7 +56,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter('frenchQuotes', function (content) {
     // Remplace les guillemets doubles par des guillemets français avec espaces fines insécables
     // mais uniquement en dehors des balises HTML
-    // content = content.replace(/"([^"]*)"(?![^<]*>)/g, '«\u202F$1\u202F»');
+    content = content.replace(/"([^"]*)"(?![^<]*>)/g, '«\u202F$1\u202F»');
     // Remplace les apostrophes droites par des apostrophes typographiques
     content = content.replace(/'/g, '\u2019');
 
@@ -100,8 +120,7 @@ export default function (eleventyConfig) {
     }
 
     // Formate les références comme des notes de bas de page avec ancres et lien de retour
-    let footnotes =
-      '<ol>';
+    let footnotes = '<ol>';
     references.forEach((ref, index) => {
       const n = index + 1;
       footnotes += `<li id="fn-${n}">${ref} <a href="#fnref-${n}" aria-label="Retour au texte">↩︎</a></li>\n`;
