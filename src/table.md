@@ -24,7 +24,7 @@ title: Table
 {% for r in records %}
 
   <tr>
-    <th scope="row"><a href="/records/{{ r.id }}" target="_blank">{{ r.title }}</a></th>
+    <th scope="row"><a href="/records/{{ r.id }}" target="_blank">{{ r.title | frenchQuotes }}</a></th>
     <td>{{ r.line }}</td>
     <td>{{ r.tags | size }}</td>
     <td>{{ r.links | size }}</td>

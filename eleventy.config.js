@@ -19,6 +19,14 @@ export default function (eleventyConfig) {
     return md.render(normalizedContent);
   });
 
+  function replaceTypographicQuotes(text) {
+    // double quotes to typographic
+    text = text.replace(/"([^"]*)"/g, '«\u202F$1\u202F»');
+    // simple quotes to typographic
+    text = text.replace(/'/g, '\u2019');
+    return text;
+  }
+
   eleventyConfig.addFilter('links_html', function (content, record) {
     // Combiner les liens et les dates dans une liste unique, triée par longueur décroissante
     const allItems = [];
@@ -27,10 +35,11 @@ export default function (eleventyConfig) {
     if (record.links && Array.isArray(record.links)) {
       record.links.forEach((link) => {
         if (link.anchor) {
+          const anchorTypographic = replaceTypographicQuotes(link.anchor);
           allItems.push({
-            text: link.anchor,
-            html: `<a href="/records/${link.id}" title="${link.title}">${link.anchor}</a>`,
-            length: link.anchor.length,
+            text: anchorTypographic,
+            html: `<a href="/records/${link.id}" title="${link.title}">${anchorTypographic}</a>`,
+            length: anchorTypographic.length,
           });
         }
       });
@@ -82,9 +91,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter('frenchQuotes', function (content) {
     // Remplace les guillemets doubles par des guillemets français avec espaces fines insécables
     // mais uniquement en dehors des balises HTML
-    content = content.replace(/"([^"]*)"(?![^<]*>)/g, '«\u202F$1\u202F»');
-    // Remplace les apostrophes droites par des apostrophes typographiques
-    content = content.replace(/'/g, '\u2019');
+    content = replaceTypographicQuotes(content);
 
     // Espaces insécables avant la ponctuation double
     // Espace fine insécable (U+202F) avant ; ! ?
