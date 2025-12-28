@@ -10,7 +10,7 @@ title: Masteï
 <ul>
     {%- for r in records -%}
     <li>
-        <a href="/records/{{ r.id }}/">{{ r.title }}{% if r.alias.size > 0 %} • {{ r.alias | join: " • " }}{% endif %}</a>
+        <a href="/records/{{ r.id }}/">{{ r.title | frenchQuotes }}{% if r.alias.size > 0 %} • {{ r.alias | join: " • " }}{% endif %}</a>
     </li>
     {%- endfor -%}
 </ul>

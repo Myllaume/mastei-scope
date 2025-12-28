@@ -27,7 +27,7 @@ title: Dates
         <li>
             <a href="/records/{{ r.id }}">{{ r.title | frenchQuotes }}</a>
             {%- for c in r.context %}
-            <p class="prose">{{ c | bibliographyIndex: r | bibliographyIndex }}</p>
+            <p class="prose">{{ c | frenchQuotes | bibliographyIndex: r | bibliographyIndex }}</p>
             {%- endfor %}
         </li>
         {%- endfor %}
