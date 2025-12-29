@@ -20,13 +20,9 @@ export default function (eleventyConfig) {
   });
 
   function replaceTypographicQuotes(text) {
-    // double quotes to typographic (en traitant les single quotes à l'intérieur)
-    text = text.replace(/"([^"]*)"/g, function (match, content) {
-      // Remplacer les paires de single quotes par des guillemets simples typographiques avec espaces fines insécables
-      content = content.replace(/'([^']*)'/g, '\u2039\u202F$1\u202F\u203A');
-      return '«\u202F' + content + '\u202F»';
-    });
-    // simple quotes to typographic (apostrophes restantes)
+    // double quotes to typographic
+    text = text.replace(/"([^"]*)"/g, '«\u202F$1\u202F»');
+    // simple quotes to typographic
     text = text.replace(/'/g, '\u2019');
     return text;
   }
