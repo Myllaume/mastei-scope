@@ -31,6 +31,11 @@ export default function (eleventyConfig) {
     return text;
   }
 
+  function removeAccents(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+
   eleventyConfig.addFilter('links_html', function (content, record) {
     // Combiner les liens et les dates dans une liste unique, triée par longueur décroissante
     const allItems = [];
@@ -71,17 +76,27 @@ export default function (eleventyConfig) {
     // Remplacer tous les éléments par des placeholders
     for (let i = 0; i < allItems.length; i++) {
       const item = allItems[i];
-      const escapedText = escapeRegExp(item.text);
+      const escapedText = escapeRegExp(removeAccents(item.text));
       const regex = new RegExp(`\\b(${escapedText})\\b`, 'g');
       const placeholder = `${PLACEHOLDER_PREFIX}${i}${PLACEHOLDER_SUFFIX}`;
 
-      content = content.replace(regex, (match) => {
+      const contentWithoutAccents = removeAccents(content);
+      const matches = [];
+      let match;
+      
+      while ((match = regex.exec(contentWithoutAccents)) !== null) {
+        matches.push({ index: match.index, length: match[0].length });
+      }
+
+      // Traiter les matches en ordre inverse pour ne pas décaler les indices
+      for (let j = matches.length - 1; j >= 0; j--) {
+        const { index, length } = matches[j];
         replacements.push({
           placeholder,
           html: item.html,
         });
-        return placeholder;
-      });
+        content = content.slice(0, index) + placeholder + content.slice(index + length);
+      }
     }
 
     // Restaurer les placeholders par les vrais liens
