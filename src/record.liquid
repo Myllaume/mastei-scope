@@ -33,7 +33,7 @@ eleventyComputed:
                 <a href="/records/{{ link.id }}/">{{ link.title }}</a>
                 {% if link.context.size > 0 %}
                   {%- for context in link.context -%}
-                    <p class="prose">{{ context | frenchQuotes | bibliographyIndex: record }}</p>
+                    <p class="prose">{{ context | frenchQuotes | bibliographyIndex: link }}</p>
                   {%- endfor -%}
                 {% endif %}
               </li>
