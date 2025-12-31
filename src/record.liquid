@@ -30,7 +30,7 @@ eleventyComputed:
           <ul>
             {% for link in record.backlinks %}
               <li>
-                <a href="/records/{{ link.id }}/">{{ link.title }}</a>
+                <a href="/records/{{ link.id }}/">{{ link.title | frenchQuotes }}</a>
                 {% if link.context.size > 0 %}
                   {%- for context in link.context -%}
                     <p class="prose">{{ context | frenchQuotes | bibliographyIndex: link }}</p>
@@ -49,7 +49,20 @@ eleventyComputed:
           <summary>Liens ({{ record.links.size }})</summary>
           <ul>
             {%- for link in record.links -%}
-              <li><a href="/records/{{ link.id }}/">{{ link.title }}</a></li>
+              <li><a href="/records/{{ link.id }}/">{{ link.title | frenchQuotes }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </details>
+      </section>
+    {% endif %}
+
+    {% if record.communityRecords.size > 0 %}
+      <section>
+        <details>
+          <summary>Communauté ({{ record.communityRecords.size }})</summary>
+          <ul>
+            {%- for r in record.communityRecords -%}
+              <li><a href="/records/{{ r.id }}/">{{ r.title | frenchQuotes }}</a></li>
             {%- endfor -%}
           </ul>
         </details>
@@ -70,7 +83,7 @@ eleventyComputed:
           <li>
             <ul>
               {% for record in depth %}
-              <li><a href="/records/{{ record.id }}/">{{ record.title }}</a></li>
+              <li><a href="/records/{{ record.id }}/">{{ record.title | frenchQuotes }}</a></li>
               {% endfor %}
             </ul>
           </li>
