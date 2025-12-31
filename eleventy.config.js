@@ -178,6 +178,10 @@ export default function (eleventyConfig) {
     return footnotes;
   });
 
+  eleventyConfig.addFilter('formatNumber', function (number) {
+    return new Intl.NumberFormat('fr-FR').format(number);
+  });
+
   eleventyConfig.addPassthroughCopy('src/assets');
   eleventyConfig.addPassthroughCopy({
     'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',
