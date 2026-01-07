@@ -17,6 +17,7 @@ title: Table
       <th scope="col">dates</th>
       <th scope="col">mots</th>
       <th scope="col">citations</th>
+      <th scope="col">anomalies</th>
     </tr>
   </thead>
   <tbody>
@@ -32,13 +33,14 @@ title: Table
     <td>{{ r.dates | size | formatNumber }}</td>
     <td>{{ r.description | number_of_words | formatNumber }}</td>
     <td>{{ r.quotes | size | formatNumber }}</td>
+    <td>{{ r.report | size }}</td>
   </tr>
   {% endfor %}
     
   </tbody>
   <tfoot>
     <tr>
-      <td>Total ({{ records | size }} fiches)</td>
+      <td>Total ({{ records | size | formatNumber }} fiches)</td>
       <td></td>
       <td>
         {%- assign total_tags = 0 -%}
@@ -79,6 +81,14 @@ title: Table
           {%- assign total_quotes = total_quotes | plus: count -%}
         {%- endfor -%}
         {{ total_quotes | formatNumber }}
+      </td>
+      <td>
+        {%- assign total_report = 0 -%}
+        {%- for r in records -%}
+          {%- assign count = r.report | size -%}
+          {%- assign total_report = total_report | plus: count -%}
+        {%- endfor -%}
+        {{ total_report | formatNumber }}
       </td>
     </tr>
   </tfoot>

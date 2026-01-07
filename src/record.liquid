@@ -125,6 +125,19 @@ eleventyComputed:
         </details>
       </section>
     {% endif %}
+
+    {% if record.report.size > 0 %}
+      <section>
+        <details>
+          <summary>Anomalies ({{ record.report.size }})</summary>
+          <ul>
+            {%- for anomaly in record.report -%}
+              <li><samp>{{ anomaly }}</samp></li>
+            {%- endfor -%}
+          </ul>
+        </details>
+      </section>
+    {% endif %}
   </footer>
 
 </article>
