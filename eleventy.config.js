@@ -28,9 +28,8 @@ export default function (eleventyConfig) {
   }
 
   function removeAccents(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
 
   eleventyConfig.addFilter('links_html', function (content, record) {
     // Combiner les liens et les dates dans une liste unique, triée par longueur décroissante
@@ -79,7 +78,7 @@ export default function (eleventyConfig) {
       const contentWithoutAccents = removeAccents(content);
       const matches = [];
       let match;
-      
+
       while ((match = regex.exec(contentWithoutAccents)) !== null) {
         matches.push({ index: match.index, length: match[0].length });
       }
@@ -91,7 +90,8 @@ export default function (eleventyConfig) {
           placeholder,
           html: item.html,
         });
-        content = content.slice(0, index) + placeholder + content.slice(index + length);
+        content =
+          content.slice(0, index) + placeholder + content.slice(index + length);
       }
     }
 
@@ -160,16 +160,32 @@ export default function (eleventyConfig) {
     while ((match = quoteRegex.exec(content)) !== null) {
       // match[1] contient le contenu entre parenthèses
       const refContent = match[1];
-      references.push(refContent);
+      const authorYearMatch = refContent.match(/^([A-Z][a-z]+\d+)/);
+      references.push({
+        text: refContent,
+        authorYear: authorYearMatch ? authorYearMatch[1] : null,
+      });
     }
 
     if (references.length === 0) {
       return '';
     }
 
+    // Traiter les références pour remplacer les auteurs consécutifs par "Ibid."
+    const processedReferences = references.map((ref, index) => {
+      if (
+        index > 0 &&
+        ref.authorYear &&
+        ref.authorYear === references[index - 1].authorYear
+      ) {
+        return ref.text.replace(/^[A-Z][a-z]+\d+/, '<i>Ibid.</i>');
+      }
+      return ref.text;
+    });
+
     // Formate les références comme des notes de bas de page avec ancres et lien de retour
     let footnotes = '<ol>';
-    references.forEach((ref, index) => {
+    processedReferences.forEach((ref, index) => {
       const n = index + 1;
       footnotes += `<li id="fn-${n}">${ref} <a href="#fnref-${n}" aria-label="Retour au texte">↩︎</a></li>\n`;
     });
