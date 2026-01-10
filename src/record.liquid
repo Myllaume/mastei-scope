@@ -138,6 +138,24 @@ eleventyComputed:
         </details>
       </section>
     {% endif %}
+
+    {% if record.bibliographicEntries.size > 0 %}
+      <section>
+        <details>
+          <summary>Bibliographie ({{ record.bibliographicEntries.size }})</summary>
+          <ul>
+            {%- for entry in record.bibliographicEntries -%}
+              <li>
+                {{ entry.authors | join: ", " }}, {{ entry.year }}.
+                <i>{{ entry.title }}</i>.
+                {{ entry.place }}, {{ entry.publisher }}.
+                ISBN {{ entry.ISBN }}.
+              </li>
+            {%- endfor -%}
+          </ul>
+        </details>
+      </section>
+    {% endif %}
   </footer>
 
 </article>

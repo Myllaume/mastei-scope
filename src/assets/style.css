@@ -34,3 +34,7 @@ td {
   padding: 8px 12px;
   text-align: left;
 }
+
+li + li {
+  margin-top: 0.2em;
+}
