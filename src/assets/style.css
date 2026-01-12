@@ -38,3 +38,13 @@ td {
 li + li {
   margin-top: 0.2em;
 }
+
+@media print {
+  a {
+    text-decoration: none;
+  }
+
+  details > summary {
+    list-style: none;
+  }
+}
