@@ -217,6 +217,10 @@ export default function (eleventyConfig) {
     return Array.from(tagsSet).sort();
   });
 
+  const today = new Date();
+  const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')} ${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}:${String(today.getSeconds()).padStart(2, '0')}`;
+  eleventyConfig.addGlobalData('today', dateString);
+
   return {
     dir: {
       input: 'src',
