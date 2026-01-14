@@ -33,7 +33,7 @@ eleventyComputed:
                 <a href="/records/{{ link.id }}/">{{ link.title | frenchQuotes }}</a>
                 {% if link.context.size > 0 %}
                   {%- for context in link.context -%}
-                    <p class="prose">{{ context | frenchQuotes | bibliographyIndex: link }}</p>
+                    <p class="prose">{{ context | frenchQuotes | bibliographyIndex: link | highlightRecord : record }}</p>
                   {%- endfor -%}
                 {% endif %}
               </li>
@@ -107,19 +107,6 @@ eleventyComputed:
           <ul>
             {%- for tag in record.tags -%}
               <li><a href="/tags/{{ tag }}">{{ tag }}</a></li>
-            {%- endfor -%}
-          </ul>
-        </details>
-      </section>
-    {% endif %}
-
-    {% if record.books.size > 0 %}
-      <section>
-        <details>
-          <summary>Livres ({{ record.books.size }})</summary>
-          <ul>
-            {%- for book in record.books -%}
-              <li><a href="/books/{{ book }}/">{{ book }}</a></li>
             {%- endfor -%}
           </ul>
         </details>

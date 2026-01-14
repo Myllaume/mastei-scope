@@ -39,6 +39,10 @@ li + li {
   margin-top: 0.2em;
 }
 
+mark {
+  background-color: rgb(237, 237, 237);
+}
+
 @media print {
   a {
     text-decoration: none;
