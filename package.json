@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "eleventy --serve --quiet",
     "build": "eleventy",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -15,6 +16,7 @@
   "packageManager": "yarn@4.5.3",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",
+    "jest": "^30.2.0",
     "prettier": "^3.6.2"
   },
   "dependencies": {
