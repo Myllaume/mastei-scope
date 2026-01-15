@@ -206,6 +206,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/reactivity@npm:~3.1.1":
+  version: 3.1.5
+  resolution: "@vue/reactivity@npm:3.1.5"
+  dependencies:
+    "@vue/shared": "npm:3.1.5"
+  checksum: 10c0/1c38aeb73725b3825bea793194334b232388236f0b06b04471508a77cb55d71841e3eb2f345ab6812c76569918aa8f019e4cdf59ec9cefbab7625bb2bc26eb58
+  languageName: node
+  linkType: hard
+
+"@vue/shared@npm:3.1.5":
+  version: 3.1.5
+  resolution: "@vue/shared@npm:3.1.5"
+  checksum: 10c0/197aa5bdd370177d26ca7a178bb3d3d2332cee2c8e67000bd2bb91b1ffc571d5489fab3a65f38a32e941dc8182d1cd6c6af6e294bb9ea13e01eafdde475319ea
+  languageName: node
+  linkType: hard
+
 "a-sync-waterfall@npm:^1.0.0":
   version: 1.0.1
   resolution: "a-sync-waterfall@npm:1.0.1"
@@ -242,6 +258,15 @@ __metadata:
   version: 7.1.4
   resolution: "agent-base@npm:7.1.4"
   checksum: 10c0/c2c9ab7599692d594b6a161559ada307b7a624fa4c7b03e3afdb5a5e31cd0e53269115b620fcab024c5ac6a6f37fa5eb2e004f076ad30f5f7e6b8b671f7b35fe
+  languageName: node
+  linkType: hard
+
+"alpinejs@npm:^3.15.4":
+  version: 3.15.4
+  resolution: "alpinejs@npm:3.15.4"
+  dependencies:
+    "@vue/reactivity": "npm:~3.1.1"
+  checksum: 10c0/3248cb35a0a5bf51f829ead760c0b1c680a1355f081fc4883a879a0a7404ee0fc6f107717a02a0afce1648c5bd6206d43cae85ff4796f6851379ffb540e68780
   languageName: node
   linkType: hard
 
@@ -1131,6 +1156,7 @@ __metadata:
   resolution: "mastei-scope@workspace:."
   dependencies:
     "@11ty/eleventy": "npm:^3.1.2"
+    alpinejs: "npm:^3.15.4"
     fuse.js: "npm:^7.1.0"
     graphology: "npm:^0.26.0"
     graphology-layout: "npm:^0.6.1"

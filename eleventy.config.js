@@ -8,6 +8,14 @@ const PLACEHOLDER_PREFIX = '_LINK_';
 const PLACEHOLDER_SUFFIX = '_';
 
 export default function (eleventyConfig) {
+  eleventyConfig.addPassthroughCopy('src/assets');
+  eleventyConfig.addPassthroughCopy({
+    'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',
+  });
+  eleventyConfig.addPassthroughCopy({
+    'node_modules/alpinejs/dist/module.esm.min.js': 'assets/alpine.mjs',
+  });
+
   const md = markdownIt({
     html: true,
     breaks: false,
@@ -222,11 +230,6 @@ export default function (eleventyConfig) {
     return marksOnContent(content, [record.title, ...(record.alias || [])]);
   });
 
-  eleventyConfig.addPassthroughCopy('src/assets');
-  eleventyConfig.addPassthroughCopy({
-    'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',
-  });
-
   // Calculer tous les tags uniques triés
   eleventyConfig.addCollection('allTags', function (collectionApi) {
     const records = collectionApi.items[0]?.data?.records || [];
@@ -239,6 +242,23 @@ export default function (eleventyConfig) {
     });
 
     return Array.from(tagsSet).sort();
+  });
+
+  // Générer l'index JSON des fiches pour le filtrage côté client
+  eleventyConfig.addCollection('recordsIndex', function (collectionApi) {
+    const records = collectionApi.items[0]?.data?.records || [];
+
+    return records.map((record) => ({
+      id: record.id,
+      title: record.title,
+      alias: record.alias || [],
+      tags: record.tags || [],
+      links: record.links || [],
+      dateMin: record.dates?.[0]?.start || null,
+      dateMax: record.dates?.[record.dates?.length - 1]?.end || null,
+      description: record.description || '',
+      books: record.books || [],
+    }));
   });
 
   const today = new Date();

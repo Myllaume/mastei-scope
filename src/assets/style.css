@@ -59,6 +59,10 @@ hr::after {
   text-align: center;
 }
 
+.hidden {
+  display: none !important;
+}
+
 @media print {
   a {
     text-decoration: none;
