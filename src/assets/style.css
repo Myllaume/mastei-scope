@@ -26,6 +26,9 @@ summary {
 
 .prose {
   font-family: Georgia, serif;
+}
+
+p {
   max-width: 65ch;
 }
 
@@ -42,6 +45,18 @@ li + li {
 
 mark {
   background-color: rgb(237, 237, 237);
+}
+
+hr {
+  border: 0;
+  margin: 3.5em 0 2.5em 0;
+  color: inherit;
+}
+
+hr::after {
+  content: '⁂';
+  display: block;
+  text-align: center;
 }
 
 @media print {

@@ -58,10 +58,10 @@ D'une référence de fiche on détermine :
 
 On détermine les anomalies suivantes pour une fiche :
 
-- Pas de description (vide)
-- Pas de mot-clé identifié
-- Pas de référence à une fiche identifiée
-- Pas référence bibliographique
+- Pas de **description** (vide)
+- Pas de **mot-clé** identifié
+- Pas de **référence à une fiche** identifiée
+- Pas **référence bibliographique**
 
 ## Graphe
 
@@ -76,3 +76,9 @@ Les références bibliographiques permettent de
 
 - Retrouver une information dans sa **source de vérité**.
 - Identifier un **ensemble de fiches** basée sur les mêmes ouvrages, voire la même page.
+
+## Pages
+
+**Tableau** compare les fiches avec des critères quantitatifs dans un tableau triable. Le nombre d'anomalies permet pas exemple de retrouver rapidement les fiches qui nécessite une correction.
+
+**Dates** est une liste chronologique des dates extraites des fiches. Pour chaque date sont listées les fiches comportant la date, ainsi qu'un extrait contextuel.

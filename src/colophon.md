@@ -9,6 +9,8 @@ layout: base.liquid
 
 Dernière génération : <samp>{{ today }}</samp>.
 
+---
+
 ## Technologies et conception
 
 - **Générateur statique** : [Eleventy (11ty)](https://www.11ty.dev/) v3.1.2.

@@ -199,7 +199,9 @@ export default function (eleventyConfig) {
   });
 
   function marksOnContent(content, words) {
-    const escapedWords = words.map((word) => escapeRegExp(word));
+    const escapedWords = words.map((word) =>
+      escapeRegExp(replaceTypographicQuotes(word))
+    );
     const regex = new RegExp(`\\b(${escapedWords.join('|')})\\b`, 'gi');
     return content.replace(regex, '<mark>$1</mark>');
   }
