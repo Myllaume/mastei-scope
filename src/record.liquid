@@ -134,7 +134,7 @@ eleventyComputed:
             {%- for entry in record.bibliographicEntries -%}
               <li>
                 {{ entry.authors | join: ", " }}, {{ entry.year }}.
-                <i>{{ entry.title }}</i>.
+                <cite>{{ entry.title }}</cite>.
                 {{ entry.place }}, {{ entry.publisher }}.
                 ISBN : {{ entry.ISBN }}.
               </li>
