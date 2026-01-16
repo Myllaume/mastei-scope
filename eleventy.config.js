@@ -212,7 +212,6 @@ export default function (eleventyConfig) {
     return marksOnContent(content, [word]);
   });
 
-
   eleventyConfig.addFilter('highlightRecord', function (content, record) {
     if (!record) {
       return content;

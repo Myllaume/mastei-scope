@@ -18,6 +18,10 @@
     "prettier": "^3.6.2"
   },
   "dependencies": {
-    "fuse.js": "^7.1.0"
+    "fuse.js": "^7.1.0",
+    "graphology": "^0.26.0",
+    "graphology-layout": "^0.6.1",
+    "graphology-layout-forceatlas2": "^0.10.1",
+    "graphology-layout-noverlap": "^0.4.2"
   }
 }
