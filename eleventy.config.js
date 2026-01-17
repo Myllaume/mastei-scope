@@ -8,6 +8,14 @@ const PLACEHOLDER_PREFIX = '_LINK_';
 const PLACEHOLDER_SUFFIX = '_';
 
 export default function (eleventyConfig) {
+  eleventyConfig.addPassthroughCopy('src/assets');
+  eleventyConfig.addPassthroughCopy({
+    'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',
+  });
+  eleventyConfig.addPassthroughCopy({
+    'node_modules/alpinejs/dist/module.esm.min.js': 'assets/alpine.mjs',
+  });
+
   const md = markdownIt({
     html: true,
     breaks: false,
@@ -220,25 +228,6 @@ export default function (eleventyConfig) {
     }
 
     return marksOnContent(content, [record.title, ...(record.alias || [])]);
-  });
-
-  eleventyConfig.addPassthroughCopy('src/assets');
-  eleventyConfig.addPassthroughCopy({
-    'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',
-  });
-
-  // Calculer tous les tags uniques triés
-  eleventyConfig.addCollection('allTags', function (collectionApi) {
-    const records = collectionApi.items[0]?.data?.records || [];
-    const tagsSet = new Set();
-
-    records.forEach((record) => {
-      if (record.tags && Array.isArray(record.tags)) {
-        record.tags.forEach((tag) => tagsSet.add(tag));
-      }
-    });
-
-    return Array.from(tagsSet).sort();
   });
 
   const today = new Date();

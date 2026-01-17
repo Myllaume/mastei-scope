@@ -39,9 +39,11 @@ export default function (data) {
 
   // Step 3: Overlap removal
   const positionsNoverlap = noverlap(graph, {
-    maxIterations: 50,
+    maxIterations: 500,
     settings: {
-      ratio: 50,
+      ratio: 1,
+      nodeMargin: 5,
+      expansion: 1.1,
     },
   });
 
@@ -87,14 +89,26 @@ export default function (data) {
     const color = attr.color || '#000';
     const label = attr.label || node;
 
-    svgContent += `<circle cx="${x}" cy="${y}" r="5" fill="${color}" stroke="#fff" stroke-width="1" />`;
+    svgContent += `<circle cx="${x}" cy="${y}" r="10" :fill="open === '${node}' ? 'red' : '${color}'" @click="window.location.hash = '${node}'" />`;
     // svgContent += `<text x="${x}" y="${y - 10}" text-anchor="middle" font-size="10" fill="#333">${label}</text>`;
   });
 
+  const defaultNode = 'parti-national-socialiste-des-travailleurs-allemands';
+
   return `
     <h1>Graphe des enregistrements</h1>
-    <svg width="100%" height="800" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
-      ${svgContent}
-    </svg>
+    <div x-data="{
+      open: window.location.hash.slice(1) || '${defaultNode}',
+      init() {
+        window.addEventListener('hashchange', () => {
+          this.open = window.location.hash.slice(1);
+        });
+      }
+    }">
+      <div><samp x-text="open"></samp></div>
+      <svg width="100%" height="800" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+        ${svgContent}
+      </svg>
+    </div>
   `;
 }

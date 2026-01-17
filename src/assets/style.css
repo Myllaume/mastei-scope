@@ -59,6 +59,10 @@ hr::after {
   text-align: center;
 }
 
+circle {
+  cursor: pointer;
+}
+
 @media print {
   a {
     text-decoration: none;

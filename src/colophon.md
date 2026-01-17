@@ -13,9 +13,9 @@ Dernière génération : <samp>{{ today }}</samp>.
 
 ## Technologies et conception
 
-- **Générateur statique** : [Eleventy (11ty)](https://www.11ty.dev/) v3.1.2.
+- **Générateur statique** : [{{ eleventy.generator }}](https://www.11ty.dev/).
 - **Langages** : Markdown, Liquid, HTML5, CSS3, JavaScript (ES6 modules).
-- **Scripts** : Tableaux interactifs (tri, recherche) via JS natif et [Fuse.js](https://fusejs.io/) pour la recherche plein texte.
+- **Scripts** : Interactions via [Alpine.js](https://alpinejs.dev/) et [Fuse.js](https://fusejs.io/) pour la recherche plein texte.
 - **Structuration** : Données organisées en dossiers (`records`, `books`, `dates`, `tags`), chaque fiche étant générée à partir de sources structurées (YAML/Markdown).
 - **Mise en page** : Templates Liquid, styles personnalisés.
 - **Développement** : Utilisation de Prettier pour la cohérence du code.
