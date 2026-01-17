@@ -48,5 +48,3 @@ Alpine.data('tableSort', () => ({
 }));
 
 Alpine.start();
-
-console.log(Alpine);
