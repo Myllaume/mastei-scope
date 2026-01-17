@@ -1,4 +1,5 @@
 import markdownIt from 'markdown-it';
+import htmlmin from 'html-minifier-terser';
 
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -233,6 +234,25 @@ export default function (eleventyConfig) {
   const today = new Date();
   const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')} ${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}:${String(today.getSeconds()).padStart(2, '0')}`;
   eleventyConfig.addGlobalData('today', dateString);
+
+  // Minification HTML en mode production
+  eleventyConfig.addTransform('htmlmin', function (content) {
+    if (
+      process.env.ELEVENTY_ENV === 'production' &&
+      (this.page.outputPath || '').endsWith('.html')
+    ) {
+      return htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true,
+        minifyCSS: true,
+        minifyJS: true,
+        keepClosingSlash: true,
+        caseSensitive: true,
+      });
+    }
+    return content;
+  });
 
   return {
     dir: {

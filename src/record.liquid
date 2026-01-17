@@ -6,7 +6,7 @@ pagination:
 permalink: "/records/{{ record.id }}/"
 layout: base.liquid
 eleventyComputed:
-  title: "{{ record.title }}"
+  title: "{{ record.title | frenchQuotes }}"
 ---
 
 <article>
