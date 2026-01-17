@@ -4,7 +4,7 @@ window.Alpine = Alpine;
 
 // Composant de tri de tableau
 Alpine.data('tableSort', () => ({
-  sortColumn: null,
+  sortColumn: 0,
   sortDirection: 1, // 1 = ascendant, -1 = descendant
 
   sort(columnIndex) {
@@ -25,12 +25,8 @@ Alpine.data('tableSort', () => ({
         const cellB = rowB.children[columnIndex];
 
         // Extraire le texte (avec ou sans lien)
-        const valueA = (
-          cellA.querySelector('a')?.textContent || cellA.textContent
-        ).trim();
-        const valueB = (
-          cellB.querySelector('a')?.textContent || cellB.textContent
-        ).trim();
+        const valueA = cellA.textContent.trim();
+        const valueB = cellB.textContent.trim();
 
         // Comparaison numérique ou alphabétique
         const numA = parseFloat(valueA);
