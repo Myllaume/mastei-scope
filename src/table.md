@@ -5,19 +5,19 @@ title: Table
 
 <h1>Récapitulatif des fiches</h1>
 
-<table>
+<table x-data="tableSort">
   <caption>Statistiques générales</caption>
   <thead>
     <tr>
-      <th scope="col">Titre</th>
-      <th scope="col">ligne</th>
-      <th scope="col">tags</th>
-      <th scope="col">liens</th>
-      <th scope="col">r.liens</th>
-      <th scope="col">dates</th>
-      <th scope="col">mots</th>
-      <th scope="col">citations</th>
-      <th scope="col">anomalies</th>
+      <th scope="col" @click="sort(0)">Titre&nbsp;<span x-text="indicator(0)"></span></th>
+      <th scope="col" @click="sort(1)">l.&nbsp;<span x-text="indicator(1)"></span></th>
+      <th scope="col" @click="sort(2)">tags&nbsp;<span x-text="indicator(2)"></span></th>
+      <th scope="col" @click="sort(3)">liens&nbsp;<span x-text="indicator(3)"></span></th>
+      <th scope="col" @click="sort(4)">r.liens&nbsp;<span x-text="indicator(4)"></span></th>
+      <th scope="col" @click="sort(5)">dates&nbsp;<span x-text="indicator(5)"></span></th>
+      <th scope="col" @click="sort(6)">mots&nbsp;<span x-text="indicator(6)"></span></th>
+      <th scope="col" @click="sort(7)">cits.&nbsp;<span x-text="indicator(7)"></span></th>
+      <th scope="col" @click="sort(8)">ano.&nbsp;<span x-text="indicator(8)"></span></th>
     </tr>
   </thead>
   <tbody>
@@ -93,5 +93,3 @@ title: Table
     </tr>
   </tfoot>
 </table>
-
-<script src="/assets/table.js"></script>
