@@ -1,0 +1,4 @@
+recordFilePath: ../mastei-notes/dates.yml
+tagsDictFilePath: ../mastei-notes-parser/src/dict.yaml
+bibFilePath: ../mastei-notes/bib.json
+outputDirectory: ./src/_data
