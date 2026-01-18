@@ -77,3 +77,7 @@ circle {
     list-style: none;
   }
 }
+
+u {
+  text-decoration: red wavy underline;
+}

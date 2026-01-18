@@ -1,5 +1,7 @@
 import markdownIt from 'markdown-it';
 import htmlmin from 'html-minifier-terser';
+import fs from 'node:fs';
+import path from 'node:path';
 
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -21,6 +23,44 @@ export default function (eleventyConfig) {
     html: true,
     breaks: false,
     linkify: true,
+  });
+
+  // Transformer les liens wiki avant le traitement markdown
+  eleventyConfig.addPreprocessor('wikilinks', '*', (data, content) => {
+    if (!data.page.filePathStem.startsWith('/wiki/')) {
+      return content;
+    }
+
+    // Transforme les liens wiki [[...]] en liens markdown
+    // [[The Council]] -> [The Council](/wiki/the-council/)
+    // [[The Council | Le jeu The Council]] -> [Le jeu The Council](/wiki/the-council/)
+    // [[the COuncil | ]] -> [the COuncil](/wiki/the-council/)
+    // [[dead]] -> <u>dead</u> (si le fichier n'existe pas)
+    const transformed = content.replace(
+      /\[\[([^\]|]+)(?:\s*\|\s*([^\]]*))?\]\]/g,
+      (match, slug, displayText) => {
+        // Normaliser le slug (minuscules, espaces en tirets)
+        const normalizedSlug = slug.toLowerCase().trim().replace(/\s+/g, '-');
+
+        // Utiliser le texte d'affichage s'il existe et n'est pas vide, sinon utiliser le slug original
+        const text =
+          displayText && displayText.trim() ? displayText.trim() : slug;
+
+        // Vérifier si le fichier existe
+        const wikiFilePath = path.join('src/wiki', `${normalizedSlug}.md`);
+        const fileExists = fs.existsSync(wikiFilePath);
+
+        if (fileExists) {
+          // Créer un lien markdown normal
+          return `[${text}](/wiki/${normalizedSlug}/)`;
+        } else {
+          // Créer un lien mort souligné en rouge
+          return `<u>${text}</u>`;
+        }
+      }
+    );
+
+    return transformed;
   });
 
   eleventyConfig.addFilter('br_to_paragraph', function (content) {
