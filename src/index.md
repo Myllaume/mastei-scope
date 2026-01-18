@@ -3,16 +3,9 @@ layout: base.liquid
 title: Masteï
 ---
 
-# Fiches
+# Masteï
 
-<input type="search" placeholder="Rechercher une fiche..." />
+Explorer la base de connaissances :
 
-<ul>
-    {%- for r in records -%}
-    <li>
-        <a href="/records/{{ r.id }}/">{{ r.title | frenchQuotes }}{% if r.alias.size > 0 %} • {{ r.alias | join: " • " }}{% endif %}</a>
-    </li>
-    {%- endfor -%}
-</ul>
-
-<script type="module" src="/assets/search.js"></script>
+- [fiches](/fiches)
+- [colophon](/colophon)

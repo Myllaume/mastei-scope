@@ -33,6 +33,7 @@ export default function (eleventyConfig) {
     })
     .use(markdownItToc, {
       includeLevel: [2, 3], // <h2>, <h3>
+      markerPattern: /^\[toc\]/im,
     });
 
   // Transformer les liens wiki avant le traitement markdown

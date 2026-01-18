@@ -5,4 +5,6 @@ layout: base.liquid
 
 # Wiki
 
-"Mon wiki". Lien vers [[The Council | Le jeu The Council]], [[the-council]], [[the COuncil |]] et [[dead | Lien mort]].
+Projet inspiré du [[the council | jeu The Council]].
+
+Il requiert la [[prise notes historiques | prise de notes]] sur la période historique du 20<sup>ème</sup> siécle.
