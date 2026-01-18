@@ -1248,6 +1248,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"markdown-it-anchor@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "markdown-it-anchor@npm:9.2.0"
+  peerDependencies:
+    "@types/markdown-it": "*"
+    markdown-it: "*"
+  checksum: 10c0/1873f4223f6df227a4bf93688f14def2a69bbdf144c6257d1739eab4ac3818d3ac89c5c324fbb2d92e3980641c508a8893df36496e2f84c73630f51a94ad8d9b
+  languageName: node
+  linkType: hard
+
+"markdown-it-table-of-contents@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "markdown-it-table-of-contents@npm:1.1.0"
+  checksum: 10c0/e1f0191ecbf1042b99db14c1251bcdb55fb0bea47433335068c7aa6a71f23b0991cf78bfeb990f3ef7dc9a0f58235c5831cc18aae7f2e11ee634b04a5901c492
+  languageName: node
+  linkType: hard
+
 "markdown-it@npm:^14.1.0":
   version: 14.1.0
   resolution: "markdown-it@npm:14.1.0"
@@ -1276,6 +1293,8 @@ __metadata:
     graphology-layout-forceatlas2: "npm:^0.10.1"
     graphology-layout-noverlap: "npm:^0.4.2"
     html-minifier-terser: "npm:^7.2.0"
+    markdown-it-anchor: "npm:^9.2.0"
+    markdown-it-table-of-contents: "npm:^1.1.0"
     prettier: "npm:^3.6.2"
   languageName: unknown
   linkType: soft

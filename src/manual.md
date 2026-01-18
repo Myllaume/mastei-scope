@@ -5,6 +5,8 @@ layout: base.liquid
 
 # Manuel
 
+[[toc]]
+
 ## Fichiers
 
 **fiches.yml**, contient un tableau de fiches tel que

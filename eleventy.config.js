@@ -1,4 +1,6 @@
 import markdownIt from 'markdown-it';
+import markdownItAnchor from 'markdown-it-anchor';
+import markdownItToc from 'markdown-it-table-of-contents';
 import htmlmin from 'html-minifier-terser';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,7 +25,13 @@ export default function (eleventyConfig) {
     html: true,
     breaks: false,
     linkify: true,
-  });
+  })
+    .use(markdownItAnchor, {
+      level: [2, 3], // <h2>, <h3>
+    })
+    .use(markdownItToc, {
+      includeLevel: [2, 3], // <h2>, <h3>
+    });
 
   // Transformer les liens wiki avant le traitement markdown
   eleventyConfig.addPreprocessor('wikilinks', '*', (data, content) => {
@@ -293,6 +301,9 @@ export default function (eleventyConfig) {
     }
     return content;
   });
+
+  // Configurer la bibliothèque markdown
+  eleventyConfig.setLibrary('md', md);
 
   return {
     dir: {
