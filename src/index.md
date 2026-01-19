@@ -7,5 +7,6 @@ title: Masteï
 
 Explorer la base de connaissances :
 
-- [fiches](/fiches)
-- [colophon](/colophon)
+- [Fiches](/records)
+- [Wiki](/wiki)
+- [Colophon](/colophon)

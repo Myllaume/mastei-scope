@@ -20,6 +20,7 @@
   <header>
     <nav>
       <a href="/" {% if page.url == "/" %}aria-current="page"{% endif %}>Accueil</a>
+      <a href="/records/" {% if page.url contains "/records/" %}aria-current="page"{% endif %}>Fiches</a>
       <a href="/table/" {% if page.url contains "/table/" %}aria-current="page"{% endif %}>Tableau</a>
       <a href="/tags/" {% if page.url contains "/tags/" %}aria-current="page"{% endif %}>Tags</a>
       <a href="/books/" {% if page.url contains "/books/" %}aria-current="page"{% endif %}>Livres</a>
