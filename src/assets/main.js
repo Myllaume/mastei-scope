@@ -84,4 +84,18 @@ Alpine.data('search', () => ({
   },
 }));
 
+Alpine.data('graph', (defaultNode) => ({
+  open: window.location.hash.slice(1) || defaultNode,
+
+  init() {
+    window.addEventListener('hashchange', () => {
+      this.open = window.location.hash.slice(1);
+    });
+  },
+
+  selectNode(node) {
+    window.location.hash = node;
+  },
+}));
+
 Alpine.start();

@@ -89,7 +89,7 @@ export default function (data) {
     const color = attr.color || '#000';
     const label = attr.label || node;
 
-    svgContent += `<circle cx="${x}" cy="${y}" r="10" :fill="open === '${node}' ? 'red' : '${color}'" @click="window.location.hash = '${node}'" />`;
+    svgContent += `<circle cx="${x}" cy="${y}" r="10" :fill="open === '${node}' ? 'red' : '${color}'" @click="selectNode('${node}')" />`;
     // svgContent += `<text x="${x}" y="${y - 10}" text-anchor="middle" font-size="10" fill="#333">${label}</text>`;
   });
 
@@ -97,14 +97,7 @@ export default function (data) {
 
   return `
     <h1>Graphe des enregistrements</h1>
-    <div x-data="{
-      open: window.location.hash.slice(1) || '${defaultNode}',
-      init() {
-        window.addEventListener('hashchange', () => {
-          this.open = window.location.hash.slice(1);
-        });
-      }
-    }">
+    <div x-data="graph('${defaultNode}')">
       <div><samp x-text="open"></samp></div>
       <svg width="100%" height="800" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
         ${svgContent}
