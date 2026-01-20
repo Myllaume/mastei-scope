@@ -32,7 +32,6 @@ On détermine les anomalies suivantes pour une fiche :
 - Pas de **référence à une fiche** identifiée
 - Pas **référence bibliographique**
 
-
 ## Graphe
 
 De l'ensemble des références (**liens**) entre les fiches (**nœuds**) on déduit un graphe. Il permet d'établir des relations indirectes entre les fiches par :

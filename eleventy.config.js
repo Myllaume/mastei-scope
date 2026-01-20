@@ -26,7 +26,7 @@ export default function (eleventyConfig) {
     breaks: false,
     linkify: true,
     quotes: ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'],
-    typographer: true
+    typographer: true,
   })
     .use(markdownItAnchor, {
       level: [2, 3], // <h2>, <h3>

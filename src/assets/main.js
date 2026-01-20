@@ -1,8 +1,8 @@
 import Alpine from '/assets/alpine.mjs';
+import Fuse from '/assets/fuse.mjs';
 
 window.Alpine = Alpine;
 
-// Composant de tri de tableau
 Alpine.data('tableSort', () => ({
   sortColumn: 0,
   sortDirection: 1, // 1 = ascendant, -1 = descendant
@@ -44,6 +44,43 @@ Alpine.data('tableSort', () => ({
   indicator(columnIndex) {
     if (this.sortColumn !== columnIndex) return '⇅';
     return this.sortDirection === 1 ? '▲' : '▼';
+  },
+}));
+
+Alpine.data('search', () => ({
+  searchTerm: '',
+  items: [],
+  fuse: null,
+
+  init() {
+    this.items = Array.from(this.$root.querySelectorAll('ul a')).map((item) => {
+      return {
+        title: item.textContent.split(' • '),
+        element: item,
+      };
+    });
+
+    this.fuse = new Fuse(this.items, {
+      keys: ['title'],
+      threshold: 0.3,
+      ignoreDiacritics: true,
+    });
+
+    this.filterList();
+  },
+
+  filterList() {
+    if (!this.searchTerm.trim()) {
+      this.items.forEach((item) => (item.element.style.display = ''));
+      return;
+    }
+
+    const results = this.fuse.search(this.searchTerm);
+    const resultItems = new Set(results.map((result) => result.item.element));
+
+    this.items.forEach((item) => {
+      item.element.style.display = resultItems.has(item.element) ? '' : 'none';
+    });
   },
 }));
 

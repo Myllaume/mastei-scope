@@ -15,7 +15,6 @@ eleventyComputed:
     {% if record.alias.size > 0 %}
     <h2>{{ record.alias | join: " • " }}</h2>
     {% endif %}
-    <samp>line {{ record.line }}</samp>
   </header>
 
   <section class="prose">
@@ -44,6 +43,9 @@ eleventyComputed:
     {% endif %}
 
     <hr />
+
+    <p><samp>line {{ record.line }}</samp></p>
+    <p><a href="/graph/#{{ record.id }}">Dans le graphe</a></p>
     
     {% if record.links.size > 0 %}
       <section>
