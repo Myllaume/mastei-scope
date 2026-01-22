@@ -28,7 +28,8 @@ summary {
   font-family: Georgia, serif;
 }
 
-p {
+p,
+li {
   max-width: 65ch;
 }
 
