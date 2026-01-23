@@ -117,6 +117,31 @@ eleventyComputed:
       </section>
     {% endif %}
 
+    {% if record.onSamePage.size > 0 %}
+      <section>
+        <details>
+          {% assign totalOnSamePage = 0 %}
+          {% for ref in record.onSamePage %}
+            {% assign totalOnSamePage = totalOnSamePage | plus: ref.records.size %}
+          {% endfor %}
+
+          <summary>À la même page ({{ totalOnSamePage }})</summary>
+          <ul>
+            {%- for ref in record.onSamePage -%}
+              <li>
+                {{ ref.bookKey }}
+                <ul>
+                  {%- for r in ref.records -%}
+                  <li><a href="/records/{{ r.id }}">{{ r.title | frenchQuotes }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </details>
+      </section>
+    {% endif %}
+
     {% if record.report.size > 0 %}
       <section>
         <details>
