@@ -14,6 +14,15 @@
   <meta name="theme-color" content="#ffffff" />
   <meta name="date" content="{{ today }}" />
   <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    .search-results-item {
+      text-decoration: none;
+    }
+
+    .search-results-item-title {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
@@ -33,8 +42,33 @@
     </nav>
   </header>
 
-  {{ content }}
+  <main>
+    {{ content }}
 
-  <script type="module" src="/assets/main.js"></script>
+    <form id="mastei-search">
+      <label for="search-term" class="visually-hidden">Rechercher</label>
+      <input type="search" id="search-term" placeholder="Rechercher…" autocomplete="off" />
+    </form>
+
+    <div id="search-results" class="hide">
+      <h2 id="search-results-count">Résultats</h2>
+      <ul id="search-results-list"></ul>
+    </div>
+  </main>
+
+  <template id="search-result-template">
+    <li>
+      <a href="" class="search-results-item">
+        <span class="search-results-item-title"></span>
+        <p class="search-results-item-matches truncate-overflow"></p>
+      </a>
+    </li>
+  </template>
+
+  <template id="search-no-results-template">
+    <li>Aucun résultat trouvé.</li>
+  </template>
+
+  <script type="module" src="/assets/search.js"></script>
 </body>
 </html>

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "eleventy --serve --quiet",
-    "build": "ELEVENTY_ENV=production eleventy",
+    "build": "ELEVENTY_ENV=production eleventy && yarn pagefind",
+    "pagefind": "pagefind --site _site",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -15,6 +16,7 @@
   "packageManager": "yarn@4.5.3",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",
+    "pagefind": "^1.4.0",
     "prettier": "^3.6.2"
   },
   "dependencies": {

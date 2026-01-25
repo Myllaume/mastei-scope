@@ -1,0 +1,77 @@
+/* Pagefind customization */
+.pagefind-ui__search-input {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 1rem;
+  padding: 0.4em 0.6em;
+  border: 1px solid #202122;
+  border-radius: 0;
+  background: transparent;
+  color: #202122;
+}
+
+.pagefind-ui__search-input::placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+.pagefind-ui__search-clear {
+  background: transparent;
+  color: #202122;
+}
+
+.pagefind-ui__results-area {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.pagefind-ui__result {
+  border: none;
+  border-bottom: 1px solid rgb(233, 233, 231);
+  padding: 1em 0;
+}
+
+.pagefind-ui__result-link {
+  color: #202122;
+  text-decoration: none;
+}
+
+.pagefind-ui__result-link:hover {
+  text-decoration: underline;
+}
+
+.pagefind-ui__result-title {
+  font-weight: bold;
+}
+
+.pagefind-ui__result-excerpt {
+  color: #202122;
+}
+
+.pagefind-ui mark {
+  background-color: rgb(237, 237, 237);
+  color: #202122;
+}
+
+.pagefind-ui__button {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  border: 1px solid #202122;
+  border-radius: 0;
+  background: transparent;
+  color: #202122;
+}
+
+.pagefind-ui__message {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #202122;
+}

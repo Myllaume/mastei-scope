@@ -37,7 +37,8 @@ td {
   text-align: left;
 }
 
-thead th, summary{
+thead th,
+summary {
   cursor: pointer;
   user-select: none;
 }
