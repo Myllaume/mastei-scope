@@ -20,10 +20,6 @@ ul {
   list-style: none;
 }
 
-summary {
-  cursor: pointer;
-}
-
 .prose {
   font-family: Georgia, serif;
 }
@@ -40,7 +36,7 @@ td {
   text-align: left;
 }
 
-thead th {
+thead th, summary{
   cursor: pointer;
   user-select: none;
 }
