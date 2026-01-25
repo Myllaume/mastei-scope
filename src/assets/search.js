@@ -15,6 +15,7 @@ class Search {
   initializeElements() {
     this.searchForm = document.getElementById('mastei-search');
     this.searchInput = document.getElementById('search-term');
+    this.typeRadios = document.querySelectorAll('input[name="search-type"]');
     this.resultsContainer = document.getElementById('search-results');
     this.resultsList = document.getElementById('search-results-list');
     this.resultsCount = document.getElementById('search-results-count');
@@ -83,29 +84,52 @@ class Search {
     this.resultsContainer.classList.toggle('hide', !show);
   }
 
+  getSelectedType() {
+    const selectedRadio = Array.from(this.typeRadios).find(
+      (radio) => radio.checked
+    );
+    return selectedRadio ? selectedRadio.value : 'all';
+  }
+
+  buildSearchOptions() {
+    const type = this.getSelectedType();
+    const options = {};
+
+    if (type !== 'all') {
+      options.filters = { type: type };
+    }
+
+    return options;
+  }
+
+  isQueryValid(query) {
+    return query.trim().length >= this.minSearchLength;
+  }
+
   async performSearch(query) {
     this.clearResults();
 
-    if (query.length < this.minSearchLength) {
+    if (!this.isQueryValid(query)) {
       this.toggleResultsVisibility(false);
       return;
     }
 
     this.toggleResultsVisibility(true);
 
-    const searchResults = await this.pagefind.search(query);
+    const options = this.buildSearchOptions();
+    const searchResults = await this.pagefind.search(query, options);
     const results = await Promise.all(
       searchResults.results.map((r) => r.data())
     );
 
-    if (results.length > 0) {
-      results.forEach((result) => this.addResult(result));
-      this.updateResultsCount(results.length);
-      this.resultsList.classList.remove('search-results-notfound');
-    } else {
+    if (results.length === 0) {
       this.showNoResults();
-      this.resultsList.classList.add('search-results-notfound');
+      return;
     }
+
+    results.forEach((result) => this.addResult(result));
+    this.updateResultsCount(results.length);
+    this.resultsList.classList.remove('search-results-notfound');
   }
 
   handleSearchInput(query) {
@@ -116,6 +140,10 @@ class Search {
   }
 
   updateURL(query) {
+    if (!this.isQueryValid(query)) {
+      return;
+    }
+
     const path = query ? `/search/?q=${encodeURIComponent(query)}` : '/search/';
     window.history.replaceState({}, '', path);
   }
@@ -131,6 +159,17 @@ class Search {
 
     this.searchForm.addEventListener('submit', (event) => {
       event.preventDefault();
+    });
+  }
+
+  setupTypeRadios() {
+    this.typeRadios.forEach((radio) => {
+      radio.addEventListener('change', () => {
+        const query = this.searchInput.value;
+        if (query.length >= this.minSearchLength) {
+          this.performSearch(query);
+        }
+      });
     });
   }
 
@@ -158,6 +197,7 @@ class Search {
     await this.loadPagefind();
     this.setupSearchForm();
     this.setupSearchInput();
+    this.setupTypeRadios();
   }
 }
 

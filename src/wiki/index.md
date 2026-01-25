@@ -1,6 +1,5 @@
 ---
 title: Wiki
-layout: base.liquid
 ---
 
 # Wiki

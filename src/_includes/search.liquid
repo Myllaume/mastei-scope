@@ -15,6 +15,18 @@
   <meta name="date" content="{{ today }}" />
   <link rel="stylesheet" href="/assets/style.css" />
   <style>
+    [type="search"] {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+    
+    .hide {
+      display: none;
+    }
+
     .search-results-item {
       text-decoration: none;
     }
@@ -46,7 +58,22 @@
     {{ content }}
 
     <form id="mastei-search">
-      <label for="search-term" class="visually-hidden">Rechercher</label>
+      <fieldset>
+        <legend>Type de recherche</legend>
+        <label>
+          <input type="radio" name="search-type" value="all" checked>
+          Tous
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="record">
+          Fiches
+        </label>
+        <label>
+          <input type="radio" name="search-type" value="wiki">
+          Wiki
+        </label>
+      </fieldset>
+
       <input type="search" id="search-term" placeholder="Rechercher…" autocomplete="off" />
     </form>
 
@@ -60,8 +87,8 @@
     <li>
       <a href="" class="search-results-item">
         <span class="search-results-item-title"></span>
-        <p class="search-results-item-matches truncate-overflow"></p>
       </a>
+      <p class="search-results-item-matches"></p>
     </li>
   </template>
 

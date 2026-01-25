@@ -20,9 +20,9 @@ eleventyComputed:
     
   </header>
 
-  <section class="prose">
+  <main class="prose" data-pagefind-body data-pagefind-filter="type:record">
     {{ record.description | frenchQuotes | links_html: record | bibliographyIndex: record | br_to_paragraph }}
-  </section>
+  </main>
 
   <footer>
     {% if record.backlinks.size > 0 %}

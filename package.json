@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "eleventy --serve --quiet",
     "build": "ELEVENTY_ENV=production eleventy && yarn pagefind",
-    "pagefind": "pagefind --site _site",
+    "pagefind": "pagefind",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

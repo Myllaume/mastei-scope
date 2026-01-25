@@ -1,6 +1,5 @@
 ---
 title: Wiki - Prise de notes historique
-layout: base.liquid
 ---
 
 # Prise de notes historique

@@ -299,7 +299,6 @@ export default function (eleventyConfig) {
         minifyCSS: true,
         minifyJS: true,
         keepClosingSlash: true,
-        caseSensitive: true,
       });
     }
     return content;
