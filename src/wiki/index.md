@@ -5,6 +5,6 @@ layout: base.liquid
 
 # Wiki
 
-Projet inspiré du [[the council | jeu The Council]].
+Masteï est un projet de jeu narratif inspiré de [[the council | The Council]]. Il me permet d'explorer **differentes techniques et périodes historiques**.
 
-Il requiert la [[prise notes historiques | prise de notes]] sur la période historique du 20<sup>ème</sup> siécle.
+Il requiert la [[prise notes historiques | prise de notes]] sur la période historique du 20<sup>ème</sup> siécle. Et la recherche de différentes techniques de programmation.
