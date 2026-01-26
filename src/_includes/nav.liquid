@@ -1,0 +1,8 @@
+<nav>
+    <a href="/" {% if page.url == "/" %}aria-current="page"{% endif %}>Accueil</a>
+    <a href="/records/" {% if page.url contains "/records/" %}aria-current="page"{% endif %}>Fiches</a>
+    <a href="/manual/" {% if page.url contains "/manual/" %}aria-current="page"{% endif %}>Manuel</a>
+    <a href="/wiki/" {% if page.url contains "/wiki/" %}aria-current="page"{% endif %}>Wiki</a>
+    <a href="/search/" {% if page.url contains "/search/" %}aria-current="page"{% endif %}>Recherche</a>
+    <a href="/colophon/" {% if page.url contains "/colophon/" %}aria-current="page"{% endif %}>Colophon</a>
+</nav>

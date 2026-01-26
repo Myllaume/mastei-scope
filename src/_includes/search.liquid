@@ -1,18 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="generator" content="{{ eleventy.generator }}" />
-  <meta name="author" content="Guillaume Brioudes Capponi" />
-  <title>{{ title }}</title>
-  <meta property="og:title" content="{{ title }}" />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="date" content="{{ today }}" />
+  {% include "meta.liquid" %}
   <link rel="stylesheet" href="/assets/style.css" />
   <style>
     [type="search"] {
@@ -39,19 +28,7 @@
 <body>
 
   <header>
-    <nav>
-      <a href="/" {% if page.url == "/" %}aria-current="page"{% endif %}>Accueil</a>
-      <a href="/records/" {% if page.url contains "/records/" %}aria-current="page"{% endif %}>Fiches</a>
-      <a href="/table/" {% if page.url contains "/table/" %}aria-current="page"{% endif %}>Tableau</a>
-      <a href="/tags/" {% if page.url contains "/tags/" %}aria-current="page"{% endif %}>Tags</a>
-      <a href="/books/" {% if page.url contains "/books/" %}aria-current="page"{% endif %}>Livres</a>
-      <a href="/dates/" {% if page.url contains "/dates/" %}aria-current="page"{% endif %}>Dates</a>
-      <a href="/graph/" {% if page.url contains "/graph/" %}aria-current="page"{% endif %}>Graphe</a>
-      <a href="/manual/" {% if page.url contains "/manual/" %}aria-current="page"{% endif %}>Manuel</a>
-      <a href="/wiki/" {% if page.url contains "/wiki/" %}aria-current="page"{% endif %}>Wiki</a>
-      <a href="/search/" {% if page.url contains "/search/" %}aria-current="page"{% endif %}>Recherche</a>
-      <a href="/colophon/" {% if page.url contains "/colophon/" %}aria-current="page"{% endif %}>Colophon</a>
-    </nav>
+    {% include "nav.liquid" %}
   </header>
 
   <main>

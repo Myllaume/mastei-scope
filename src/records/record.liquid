@@ -10,7 +10,7 @@ eleventyComputed:
 ---
 
 <article>
-  <header>
+  <header data-pagefind-body>
     <h1>{{ record.title | frenchQuotes }}</h1>
     {% if record.alias.size > 0 %}
     <h2>{{ record.alias | join: " • " }}</h2>
