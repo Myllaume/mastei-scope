@@ -1,0 +1,17 @@
+{
+  "name": "Masteï Scope",
+  "short_name": "Masteï Scope",
+  "description": "Masteï Scope - Documentation et ressources",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

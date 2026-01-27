@@ -13,7 +13,14 @@ const PLACEHOLDER_PREFIX = '_LINK_';
 const PLACEHOLDER_SUFFIX = '_';
 
 export default function (eleventyConfig) {
+  // Ajouter les pages paginées aux collections
+  eleventyConfig.setDataDeepMerge(true);
+  
   eleventyConfig.addPassthroughCopy('src/assets');
+  eleventyConfig.addPassthroughCopy('src/robots.txt');
+  eleventyConfig.addPassthroughCopy('src/manifest.json');
+  eleventyConfig.addPassthroughCopy('src/favicon.svg');
+  eleventyConfig.addPassthroughCopy('src/favicon.ico');
   eleventyConfig.addPassthroughCopy({
     'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',
   });
@@ -280,6 +287,16 @@ export default function (eleventyConfig) {
     }
 
     return marksOnContent(content, [record.title, ...(record.alias || [])]);
+  });
+
+  eleventyConfig.addFilter('dateToRfc3339', function (date) {
+    // Convertir la date en format RFC 3339 (ISO 8601)
+    if (!date) {
+      return '';
+    }
+    
+    const d = date instanceof Date ? date : new Date(date);
+    return d.toISOString();
   });
 
   const today = new Date();

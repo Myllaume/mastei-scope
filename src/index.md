@@ -1,6 +1,7 @@
 ---
 layout: base.liquid
 title: Masteï
+eleventyExcludeFromCollections: true
 ---
 
 # Masteï
