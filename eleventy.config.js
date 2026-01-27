@@ -306,7 +306,7 @@ export default function (eleventyConfig) {
   // Minification HTML en mode production
   eleventyConfig.addTransform('htmlmin', function (content) {
     if (
-      process.env.ELEVENTY_ENV === 'production' &&
+      process.env.ELEVENTY_RUN_MODE === 'build' &&
       (this.page.outputPath || '').endsWith('.html')
     ) {
       return htmlmin.minify(content, {
