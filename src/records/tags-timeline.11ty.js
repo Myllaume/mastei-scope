@@ -6,7 +6,7 @@ export const data = {
 };
 
 // Tags à afficher (extensible)
-const TAGS_TO_DISPLAY =[
+const TAGS_TO_DISPLAY = [
   'albanie',
   'allemagne',
   'autriche',
@@ -80,56 +80,44 @@ export default function (data) {
     maxValues[tag] = Math.max(...timelineData.map((d) => d[tag]), 1);
   }
 
-  // Dimensions SVG
-  const margin = { top: 40, right: 30, bottom: 60, left: 120 };
-  const width = 900;
-  const rowHeight = 100;
-  const rowGap = 20;
-  const height = TAGS_TO_DISPLAY.length * (rowHeight + rowGap) - rowGap;
-  const innerWidth = width - margin.left - margin.right;
-
-  // Échelle X (années)
-  const xScale = d3
-    .scaleLinear()
-    .domain(d3.extent(timelineData, (d) => d.year))
-    .range([0, innerWidth]);
+  // Dimensions SVG - optimisées pour maximiser la largeur des timelines
+  const margin = { top: 20, right: 10, bottom: 30, left: 10 };
+  const rowHeight = 40;
+  const labelHeight = 18;
+  const rowGap = 5;
+  const totalRowHeight = rowHeight + labelHeight + rowGap;
+  const height = TAGS_TO_DISPLAY.length * totalRowHeight;
 
   // Générer les ticks pour l'axe X
   const years = timelineData.map((d) => d.year);
   const minYear = Math.min(...years);
   const maxYear = Math.max(...years);
-  const tickStep = Math.ceil((maxYear - minYear) / 15);
+  const tickStep = Math.ceil((maxYear - minYear) / 10);
   const xTicks = [];
   for (let y = minYear; y <= maxYear; y += tickStep) {
     xTicks.push(y);
   }
 
-  // Construire le SVG
-  let svgContent = '';
+  // Générer le HTML avec des lignes individuelles
+  let rowsHtml = '';
 
-  // Axe X (années)
-  svgContent += `<g transform="translate(${margin.left}, ${margin.top + height})">`;
-  svgContent += `<line x1="0" y1="0" x2="${innerWidth}" y2="0" stroke="var(--color-gray-500)" />`;
-  for (const tick of xTicks) {
-    const x = xScale(tick);
-    svgContent += `<line x1="${x}" y1="0" x2="${x}" y2="6" stroke="var(--color-gray-500)" />`;
-    svgContent += `<text x="${x}" y="20" text-anchor="middle" class="year-label">${tick}</text>`;
-  }
-  svgContent += `<text x="${innerWidth / 2}" y="45" text-anchor="middle" class="axis-label">Année</text>`;
-  svgContent += '</g>';
-
-  // Dessiner les horizons pour chaque tag
   TAGS_TO_DISPLAY.forEach((tag, index) => {
-    const yOffset = margin.top + index * (rowHeight + rowGap);
     const maxValue = maxValues[tag];
+    const tagLabel =
+      tag.charAt(0).toUpperCase() + tag.slice(1).replace(/-/g, ' ');
+
+    // Créer un SVG inline pour chaque tag
+    const svgWidth = 100; // en pourcentage via viewBox
+    const innerWidth = 1000; // largeur interne fixe pour le viewBox
+
+    // Échelle X pour ce SVG
+    const xScale = d3
+      .scaleLinear()
+      .domain(d3.extent(timelineData, (d) => d.year))
+      .range([0, innerWidth]);
 
     // Échelle Y pour ce tag
     const yScale = d3.scaleLinear().domain([0, maxValue]).range([rowHeight, 0]);
-
-    svgContent += `<g transform="translate(${margin.left}, ${yOffset})">`;
-
-    // Ligne de base
-    svgContent += `<line x1="0" y1="${rowHeight}" x2="${innerWidth}" y2="${rowHeight}" class="grid-line" />`;
 
     // Aire simple
     const area = d3
@@ -140,49 +128,101 @@ export default function (data) {
       .curve(d3.curveMonotoneX);
 
     const pathD = area(timelineData);
-    svgContent += `<path d="${pathD}" fill="var(--color-black)" opacity="0.7" class="horizon-area" />`;
 
-    // Label du tag
-    const tagLabel =
-      tag.charAt(0).toUpperCase() + tag.slice(1).replace(/-/g, ' ');
-    svgContent += `<text x="-10" y="${rowHeight / 2}" text-anchor="end" dominant-baseline="middle" class="tag-label">${tagLabel}</text>`;
+    // Générer les lignes verticales pour les années
+    let gridLines = '';
+    for (const tick of xTicks) {
+      const x = xScale(tick);
+      gridLines += `<line x1="${x}" y1="0" x2="${x}" y2="${rowHeight}" class="grid-line" />`;
+    }
 
-    svgContent += '</g>';
+    rowsHtml += `
+      <div class="timeline-row">
+        <div class="tag-label">${tagLabel}</div>
+        <div class="timeline-svg-container">
+          <svg class="timeline-svg" viewBox="0 0 ${innerWidth} ${rowHeight}" preserveAspectRatio="none">
+            ${gridLines}
+            <line x1="0" y1="${rowHeight}" x2="${innerWidth}" y2="${rowHeight}" class="base-line" />
+            <path d="${pathD}" fill="var(--color-black)" opacity="0.7" class="horizon-area" />
+          </svg>
+        </div>
+      </div>
+    `;
   });
 
-  const svgHeight = height + margin.top + margin.bottom;
+  // Générer l'axe X une seule fois en bas
+  const innerWidth = 1000;
+  const xScale = d3
+    .scaleLinear()
+    .domain(d3.extent(timelineData, (d) => d.year))
+    .range([0, innerWidth]);
+
+  let axisHtml = '<div class="timeline-axis">';
+  for (const tick of xTicks) {
+    const percent = ((tick - minYear) / (maxYear - minYear)) * 100;
+    axisHtml += `<span class="year-tick" style="left: ${percent}%">${tick}</span>`;
+  }
+  axisHtml += '</div>';
 
   return `
     <style>
       .timeline-container {
-        max-width: 100%;
-        overflow-x: auto;
+        width: 100%;
+      }
+      
+      .timeline-row {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 4px;
+      }
+      
+      .tag-label {
+        font-size: 11px;
+        font-weight: bold;
+        color: var(--color-black);
+        padding: 2px 0;
+      }
+      
+      .timeline-svg-container {
+        width: 100%;
+        height: 40px;
+      }
+      
+      .timeline-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
       }
       
       .horizon-area {
         transition: opacity 0.2s ease;
       }
       
-      .axis-label {
-        font-size: 14px;
-        font-weight: bold;
-        fill: var(--color-black);
-      }
-      
-      .year-label {
-        font-size: 11px;
-        fill: var(--color-gray-500);
-      }
-      
-      .tag-label {
-        font-size: 13px;
-        font-weight: bold;
-        fill: var(--color-black);
+      .base-line {
+        stroke: var(--color-gray-300);
+        stroke-width: 1;
       }
       
       .grid-line {
-        stroke: var(--color-gray-300);
-        stroke-dasharray: 2, 2;
+        stroke: var(--color-gray-200);
+        stroke-dasharray: 2, 4;
+        stroke-width: 0.5;
+      }
+      
+      .timeline-axis {
+        position: relative;
+        width: 100%;
+        height: 24px;
+        margin-top: 8px;
+        border-top: 1px solid var(--color-gray-300);
+      }
+      
+      .year-tick {
+        position: absolute;
+        transform: translateX(-50%);
+        font-size: 10px;
+        color: var(--color-gray-500);
+        top: 4px;
       }
     </style>
 
@@ -191,9 +231,8 @@ export default function (data) {
       <p>Ce graphe montre l'évolution du nombre de fiches mentionnant chaque tag au fil du temps. Plus la courbe est haute, plus le tag est cité pour cette année.</p>
       
       <div class="timeline-container">
-        <svg width="${width}" height="${svgHeight}" viewBox="0 0 ${width} ${svgHeight}" xmlns="http://www.w3.org/2000/svg">
-          ${svgContent}
-        </svg>
+        ${rowsHtml}
+        ${axisHtml}
       </div>
     </div>
   `;
