@@ -210,11 +210,14 @@ export default function (data) {
       }
       
       .timeline-axis {
-        position: relative;
+        position: sticky;
+        bottom: 0;
         width: 100%;
         height: 24px;
         margin-top: 8px;
         border-top: 1px solid var(--color-gray-300);
+        background-color: white;
+        z-index: 10;
       }
       
       .year-tick {
