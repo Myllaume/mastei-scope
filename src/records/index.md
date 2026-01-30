@@ -10,6 +10,7 @@ title: Masteï
 <a href="/books/">Livres</a>
 <a href="/dates/">Dates</a>
 <a href="/graph/">Graphe</a>
+<a href="/records/tags-graph">Tags graph</a>
 
 <div x-data="search()" @input="filterList()" x-init="init()">
   <input x-init="$el.focus()" type="search" x-model="searchTerm" placeholder="Rechercher une fiche..." />

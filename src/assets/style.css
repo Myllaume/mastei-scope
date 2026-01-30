@@ -1,3 +1,11 @@
+:root {
+  --color-highlight: #ff6b35;
+  --color-black: #202122;
+  --color-gray-800: hsl(210, 3%, 33%);
+  --color-gray-500: hsl(210, 3%, 53%);
+  --color-gray-300: hsl(210, 3%, 73%);
+}
+
 body {
   font-family:
     system-ui,
@@ -6,7 +14,7 @@ body {
   margin: 0 auto;
   max-width: 40em;
   padding: 1em 0.4em;
-  color: #202122;
+  color: var(--color-black);
 }
 
 a {

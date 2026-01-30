@@ -98,4 +98,58 @@ Alpine.data('graph', (defaultNode) => ({
   },
 }));
 
+Alpine.data('tagsGraph', () => ({
+  allNodes: null,
+  allLinks: null,
+
+  init() {
+    this.allNodes = this.$root.querySelectorAll('.node');
+    this.allLinks = this.$root.querySelectorAll('path[data-source]');
+  },
+
+  highlightNode(nodeTag, highlight) {
+    const connectedNodes = new Set([nodeTag]);
+    const connectedLinks = [];
+
+    this.allLinks.forEach((link) => {
+      const sourceTag = link.getAttribute('data-source');
+      const targetTag = link.getAttribute('data-target');
+
+      if (sourceTag === nodeTag || targetTag === nodeTag) {
+        connectedLinks.push(link);
+        connectedNodes.add(sourceTag);
+        connectedNodes.add(targetTag);
+      }
+    });
+
+    if (highlight) {
+      // Illuminer les liens connectés
+      connectedLinks.forEach((link) => {
+        link.classList.add('highlighted-link');
+      });
+
+      // Illuminer les nœuds connectés
+      this.allNodes.forEach((node) => {
+        const tag = node.getAttribute('data-tag');
+        if (connectedNodes.has(tag)) {
+          node.classList.add('highlighted-node');
+        }
+      });
+    } else {
+      // Restaurer l'apparence normale des liens
+      connectedLinks.forEach((link) => {
+        link.classList.remove('highlighted-link');
+      });
+
+      // Restaurer l'apparence normale des nœuds
+      this.allNodes.forEach((node) => {
+        const tag = node.getAttribute('data-tag');
+        if (connectedNodes.has(tag)) {
+          node.classList.remove('highlighted-node');
+        }
+      });
+    }
+  },
+}));
+
 Alpine.start();
