@@ -157,7 +157,8 @@ export default function (data) {
     .domain(d3.extent(timelineData, (d) => d.year))
     .range([0, innerWidth]);
 
-  let axisHtml = '<div class="timeline-axis">';
+  let axisHtml =
+    '<div class="timeline-axis" x-ref="axis" @mousemove="handleMouseMove" @mouseleave="handleMouseLeave">';
   for (const tick of xTicks) {
     const percent = ((tick - minYear) / (maxYear - minYear)) * 100;
     axisHtml += `<span class="year-tick" style="left: ${percent}%">${tick}</span>`;
@@ -218,6 +219,7 @@ export default function (data) {
         border-top: 1px solid var(--color-gray-300);
         background-color: white;
         z-index: 10;
+        cursor: crosshair;
       }
       
       .year-tick {
@@ -227,16 +229,30 @@ export default function (data) {
         color: var(--color-gray-500);
         top: 4px;
       }
+      
+      .comparison-bar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 1px;
+        background-color: var(--color-highlight);
+        pointer-events: none;
+        z-index: 999;
+        will-change: transform;
+      }
     </style>
 
-    <div>
+    <div x-data="tagsTimeline">
       <h1>Timeline des tags</h1>
       <p>Ce graphe montre l'évolution du nombre de fiches mentionnant chaque tag au fil du temps. Plus la courbe est haute, plus le tag est cité pour cette année.</p>
       
-      <div class="timeline-container">
+      <div class="timeline-container" x-ref="container">
         ${rowsHtml}
         ${axisHtml}
       </div>
+      
+      <div x-show="showBar" class="comparison-bar" :style="'transform: translateX(' + barPosition + 'px)'"></div>
     </div>
   `;
 }

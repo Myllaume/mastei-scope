@@ -152,4 +152,27 @@ Alpine.data('tagsGraph', () => ({
   },
 }));
 
+Alpine.data('tagsTimeline', () => ({
+  showBar: false,
+  barPosition: 0,
+
+  handleMouseMove(event) {
+    const axis = this.$refs.axis;
+    const container = this.$refs.container;
+    const axisRect = axis.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    const relativeX = event.clientX - axisRect.left;
+    const absoluteX =
+      containerRect.left + (relativeX / axisRect.width) * containerRect.width;
+
+    this.barPosition = absoluteX;
+    this.showBar = true;
+  },
+
+  handleMouseLeave() {
+    this.showBar = false;
+  },
+}));
+
 Alpine.start();
