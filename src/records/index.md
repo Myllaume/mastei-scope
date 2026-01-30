@@ -11,6 +11,7 @@ title: Masteï
 <a href="/dates/">Dates</a>
 <a href="/graph/">Graphe</a>
 <a href="/records/tags-graph">Tags graph</a>
+<a href="/records/tags-timeline">Tags timeline</a>
 
 <div x-data="search()" @input="filterList()" x-init="init()">
   <input x-init="$el.focus()" type="search" x-model="searchTerm" placeholder="Rechercher une fiche..." />
