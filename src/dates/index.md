@@ -3,6 +3,9 @@ layout: base.liquid
 title: Dates
 ---
 
+<a href="/dates/tags-timeline">Tags timeline</a>
+<a href="/dates/books-timeline">Books timeline</a>
+
 {%- assign yearGroups = dates | group_by: "date.year" -%}
 
 <nav>

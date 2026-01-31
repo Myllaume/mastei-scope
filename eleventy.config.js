@@ -9,13 +9,26 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function removeAccents(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function slugify(str) {
+  return removeAccents(str)
+    .trim()
+    .replace(/\s+|'/g, '-')
+    .replace(/[^\w-]/g, '')
+    .replace(/-+/g, '-') // remove double hyphens
+    .toLowerCase();
+}
+
 const PLACEHOLDER_PREFIX = '_LINK_';
 const PLACEHOLDER_SUFFIX = '_';
 
 export default function (eleventyConfig) {
   // Ajouter les pages paginées aux collections
   eleventyConfig.setDataDeepMerge(true);
-  
+
   eleventyConfig.addPassthroughCopy('src/assets');
   eleventyConfig.addPassthroughCopy('src/robots.txt');
   eleventyConfig.addPassthroughCopy('src/manifest.json');
@@ -294,7 +307,7 @@ export default function (eleventyConfig) {
     if (!date) {
       return '';
     }
-    
+
     const d = date instanceof Date ? date : new Date(date);
     return d.toISOString();
   });
