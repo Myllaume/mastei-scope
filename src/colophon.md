@@ -14,19 +14,16 @@ Dernière génération : <samp>{{ today }}</samp>.
 ## Technologies et conception
 
 - **Générateur statique** : [{{ eleventy.generator }}](https://www.11ty.dev/).
-- **Langages** : Markdown, Liquid, HTML5, CSS3, JavaScript (ES6 modules).
+- **Langages** : Markdown, Liquid, HTML5, CSS3, JavaScript (ES6 modules), Python.
 - **Scripts** : Interactions via [Alpine.js](https://alpinejs.dev/) et [Fuse.js](https://fusejs.io/) pour la recherche plein texte.
 - **Recherche** : [Pagefind](https://pagefind.app/) pour l'indexation et la recherche.
-- **Structuration** : Données organisées en dossiers (`records`, `books`, `dates`, `tags`), chaque fiche étant générée à partir de sources structurées (YAML/Markdown).
-- **Mise en page** : Templates Liquid, styles personnalisés.
-- **Développement** : Utilisation de Prettier pour la cohérence du code.
+- **Enrichissement des données** : Analyse sémantique avec [spaCy](https://spacy.io/).
 
 ## Données et contenu
 
 - **Fiches** : Synthèses sur des événements, concepts, acteurs, institutions, etc. du XXᵉ siècle, principalement autour de la Seconde Guerre mondiale
-- **Réseaux** : Liens entre fiches par citations, co-citations, tags, dates, sources bibliographiques
-- **Statistiques** : Tableaux récapitulatifs, indicateurs de centralité, densité de notes, anomalies, etc.
-- **Navigation** : Par tags, dates, ouvrages, et moteur de recherche
+- **Réseaux** : Liens entre fiches par citations, co-citations, tags, dates, sources bibliographiques, analyse sémantique
+- **Statistiques** : Tableaux récapitulatifs, diagrammes etc.
 
 ## Objectifs éditoriaux
 

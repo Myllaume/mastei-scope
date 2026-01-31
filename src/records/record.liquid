@@ -74,6 +74,31 @@ eleventyComputed:
       </section>
     {% endif %}
 
+    {% if record.semanticNeighbors.size > 0 %}
+      <section>
+        <details>
+          {% assign totalSemanticNeighbors = 0 %}
+          {% for scoring in record.semanticNeighbors %}
+            {% assign totalSemanticNeighbors = totalSemanticNeighbors | plus: scoring.records.size %}
+          {% endfor %}
+
+          <summary>Proximité sémantique ({{ totalSemanticNeighbors }})</summary>
+          <ul>
+            {%- for scoring in record.semanticNeighbors -%}
+              <li>
+                <samp>{{ scoring.score }}</samp>
+                <ul>
+                  {%- for r in scoring.records -%}
+                  <li><a href="/records/{{ r.id }}">{{ r.title | frenchQuotes }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </details>
+      </section>
+    {% endif %}
+
     {% if record.deepLinks.size > 0 %}
     <section>
       <details>
