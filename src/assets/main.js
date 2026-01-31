@@ -152,9 +152,14 @@ Alpine.data('tagsGraph', () => ({
   },
 }));
 
-Alpine.data('tagsTimeline', () => ({
+Alpine.data('tagsTimeline', (timelineData, minYear, maxYear, tags) => ({
   showBar: false,
   barPosition: 0,
+  currentYear: null,
+  timelineData,
+  minYear,
+  maxYear,
+  tags,
 
   handleMouseMove(event) {
     const axis = this.$refs.axis;
@@ -166,12 +171,25 @@ Alpine.data('tagsTimeline', () => ({
     const absoluteX =
       containerRect.left + (relativeX / axisRect.width) * containerRect.width;
 
+    // Calculer l'année correspondante
+    const percent = relativeX / axisRect.width;
+    this.currentYear = Math.round(
+      this.minYear + percent * (this.maxYear - this.minYear)
+    );
+
     this.barPosition = absoluteX;
     this.showBar = true;
   },
 
   handleMouseLeave() {
     this.showBar = false;
+    this.currentYear = null;
+  },
+
+  getCountForTag(tag) {
+    if (!this.currentYear) return '';
+    const yearData = this.timelineData.find((d) => d.year === this.currentYear);
+    return yearData ? ` (${yearData[tag]})` : '';
   },
 }));
 

@@ -29,6 +29,7 @@ const TAGS_IN_CIRCLE = [
   'union-sovietique',
   'yougoslavie',
   'japon',
+  'etats-unis-d-amerique',
 ];
 
 export default function (data) {
