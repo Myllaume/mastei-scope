@@ -152,6 +152,60 @@ Alpine.data('tagsGraph', () => ({
   },
 }));
 
+Alpine.data('peopleGraph', () => ({
+  allNodes: null,
+  allLinks: null,
+
+  init() {
+    this.allNodes = this.$root.querySelectorAll('.node');
+    this.allLinks = this.$root.querySelectorAll('path[data-source]');
+  },
+
+  highlightNode(personId, highlight) {
+    const connectedNodes = new Set([personId]);
+    const connectedLinks = [];
+
+    this.allLinks.forEach((link) => {
+      const source = link.getAttribute('data-source');
+      const target = link.getAttribute('data-target');
+
+      if (source === personId || target === personId) {
+        connectedLinks.push(link);
+        connectedNodes.add(source);
+        connectedNodes.add(target);
+      }
+    });
+
+    if (highlight) {
+      // Illuminer les liens connectés
+      connectedLinks.forEach((link) => {
+        link.classList.add('highlighted-link');
+      });
+
+      // Illuminer les nœuds connectés
+      this.allNodes.forEach((node) => {
+        const person = node.getAttribute('data-person');
+        if (connectedNodes.has(person)) {
+          node.classList.add('highlighted-node');
+        }
+      });
+    } else {
+      // Restaurer l'apparence normale des liens
+      connectedLinks.forEach((link) => {
+        link.classList.remove('highlighted-link');
+      });
+
+      // Restaurer l'apparence normale des nœuds
+      this.allNodes.forEach((node) => {
+        const person = node.getAttribute('data-person');
+        if (connectedNodes.has(person)) {
+          node.classList.remove('highlighted-node');
+        }
+      });
+    }
+  },
+}));
+
 Alpine.data('tagsTimeline', (timelineData, minYear, maxYear, tags) => ({
   showBar: false,
   barPosition: 0,

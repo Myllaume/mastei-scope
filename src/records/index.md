@@ -10,6 +10,7 @@ title: Masteï
 <a href="/books/">Livres</a>
 <a href="/dates/">Dates</a>
 <a href="/graph/">Graphe</a>
+<a href="/people-graph/">Graphe personnes</a>
 <a href="/records/tags-graph">Tags graph</a>
 
 <div x-data="search()" @input="filterList()" x-init="init()">
