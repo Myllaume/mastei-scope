@@ -25,3 +25,5 @@ Thumbs.db
 # Eleventy
 .cache/
 _data
+
+*.zip

@@ -1,5 +1,4 @@
 import Alpine from '/assets/alpine.mjs';
-import Fuse from '/assets/fuse.mjs';
 
 window.Alpine = Alpine;
 
@@ -52,13 +51,15 @@ Alpine.data('search', () => ({
   items: [],
   fuse: null,
 
-  init() {
+  async init() {
     this.items = Array.from(this.$root.querySelectorAll('ul a')).map((item) => {
       return {
         title: item.textContent.split(' • '),
         element: item,
       };
     });
+
+    const { default: Fuse } = await import('/assets/fuse.mjs');
 
     this.fuse = new Fuse(this.items, {
       keys: ['title'],

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "eleventy --serve --quiet",
-    "build": "eleventy && yarn pagefind",
+    "build": "sh ./build.sh",
     "pagefind": "pagefind",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
@@ -16,8 +16,10 @@
   "packageManager": "yarn@4.5.3",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",
+    "clean-css-cli": "^5.6.3",
     "pagefind": "^1.4.0",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "terser": "^5.46.0"
   },
   "dependencies": {
     "alpinejs": "^3.15.4",
