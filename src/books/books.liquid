@@ -3,20 +3,27 @@ pagination:
   data: records_by_book
   size: 1
   alias: book
-permalink: "/books/{{ book.key }}/"
+permalink: "/books/{{ book.bookKey }}/"
 layout: base.liquid
 eleventyComputed:
-  title: "{{ book.key }}"
+  title: "{{ book.bookKey }}"
 ---
 
 <article>
   <header>
-    <h1>{{ book.key }}</h1>
+    <h1>{{ book.bookKey }}</h1>
   </header>
 
   <ul>
-    {% for record in book.records %}
-      <li><a href="/records/{{ record.id }}">{{ record.title | frenchQuotes }}</a></li>
-    {% endfor %}
-  </ul>
+  {% for quote in book.quotes %}
+    <li>
+      <p class="toto">{{ quote.locator }}</p>
+      <ul>
+        {% for record in quote.records %}
+          <li><a href="/records/{{ record.id }}">{{ record.title | frenchQuotes }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+  {% endfor %}
+  <ul>
 </article>
