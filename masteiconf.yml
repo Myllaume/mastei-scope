@@ -1,5 +1,5 @@
 recordFilePath: ../mastei-notes/dates.yml
-tagsDictFilePath: ../mastei-notes-parser/src/dict.yaml
+tagsDictFilePath: ../mastei-dict/tags.json
 bibFilePath: ../mastei-notes/bib.json
-outputDirectory: ./src/_data
-dictFilePath: ../mastei-dict/dict.json
+outputDirectory: ../mastei-scope/src/_data
+dictFilePath: ../mastei-dict/spacy.json
