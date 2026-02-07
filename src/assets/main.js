@@ -75,17 +75,23 @@ Alpine.data('search', () => ({
   filterList() {
     const needle = this.normalize(this.searchTerm);
 
+    if (needle.length < 2) {
+      this.items.forEach((item) => {
+        item.element.classList.remove('hide');
+        item.element.textContent = item.originalText;
+      });
+      return;
+    }
+
     const len = this.items.length;
 
     for (let i = 0; i < len; i++) {
       const item = this.items[i];
-      const shouldHide = needle && !item.normalizedTitle.includes(needle);
+      const shouldHide = !item.normalizedTitle.includes(needle);
       item.element.classList.toggle('hide', shouldHide);
     }
 
-    if (needle.length > 2) {
-      this.highlightMatches(needle);
-    }
+    this.highlightMatches(needle);
   },
 
   highlightMatches(needle) {
