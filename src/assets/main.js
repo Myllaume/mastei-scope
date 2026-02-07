@@ -49,39 +49,36 @@ Alpine.data('tableSort', () => ({
 Alpine.data('search', () => ({
   searchTerm: '',
   items: [],
-  fuse: null,
 
   async init() {
     this.items = Array.from(this.$root.querySelectorAll('ul a')).map((item) => {
+      const title = item.textContent.split(' • ').join(' ');
       return {
-        title: item.textContent.split(' • '),
         element: item,
+        normalizedTitle: this.normalize(title),
       };
-    });
-
-    const { default: Fuse } = await import('/assets/fuse.mjs');
-
-    this.fuse = new Fuse(this.items, {
-      keys: ['title'],
-      threshold: 0.3,
-      ignoreDiacritics: true,
     });
 
     this.filterList();
   },
 
+  normalize(value) {
+    return String(value)
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .trim();
+  },
+
   filterList() {
-    if (!this.searchTerm.trim()) {
-      this.items.forEach((item) => (item.element.style.display = ''));
-      return;
+    const needle = this.normalize(this.searchTerm);
+    const len = this.items.length;
+
+    for (let i = 0; i < len; i++) {
+      const item = this.items[i];
+      const shouldHide = needle && !item.normalizedTitle.includes(needle);
+      item.element.classList.toggle('hide', shouldHide);
     }
-
-    const results = this.fuse.search(this.searchTerm);
-    const resultItems = new Set(results.map((result) => result.item.element));
-
-    this.items.forEach((item) => {
-      item.element.style.display = resultItems.has(item.element) ? '' : 'none';
-    });
   },
 }));
 

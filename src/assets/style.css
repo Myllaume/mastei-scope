@@ -88,3 +88,7 @@ circle {
 u {
   text-decoration: red wavy underline;
 }
+
+.hide {
+  display: none;
+}
