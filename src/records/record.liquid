@@ -10,7 +10,7 @@ eleventyComputed:
   title: "{{ record.title | frenchQuotes }}"
 ---
 
-<article>
+<article x-data="recordPreview">
   <header data-pagefind-body>
     <h1>{{ record.title | frenchQuotes }}</h1>
     {% if record.alias.size > 0 %}
@@ -190,4 +190,19 @@ eleventyComputed:
     <p><a href="/graph/#{{ record.id }}">Dans le graphe</a></p>
   </footer>
 
+  <!-- Preview popup -->
+  <div x-show="showPreview" 
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0 transform scale-95"
+       x-transition:enter-end="opacity-100 transform scale-100"
+       x-transition:leave="transition ease-in duration-150"
+       x-transition:leave-start="opacity-100 transform scale-100"
+       x-transition:leave-end="opacity-0 transform scale-95"
+       class="record-preview-popup"
+       :style="`left: ${previewX}px; top: ${previewY}px;`">
+    <div class="preview-content">
+      <h3 x-text="previewTitle"></h3>
+      <p x-text="previewContent"></p>
+    </div>
+  </div>
 </article>

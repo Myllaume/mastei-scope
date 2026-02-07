@@ -92,3 +92,19 @@ u {
 .hide {
   display: none;
 }
+
+/* Preview popup styles */
+.record-preview-popup {
+  position: absolute;
+  transform: translateX(-50%) translateY(-100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.preview-content {
+  background: white;
+  border: 1px solid var(--color-gray-800);
+  padding: 1em 1.2em;
+  max-width: 320px;
+  min-width: 240px;
+}

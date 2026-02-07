@@ -295,4 +295,148 @@ Alpine.data('tagsTimeline', (timelineData, minYear, maxYear, tags) => ({
   },
 }));
 
+Alpine.data('recordPreview', () => ({
+  // Configuration
+  HOVER_DELAY: 300,
+  PREVIEW_WORDS_COUNT: 30,
+  PREVIEW_OFFSET_Y: 10,
+  
+  // État
+  showPreview: false,
+  previewTitle: '',
+  previewContent: '',
+  previewX: 0,
+  previewY: 0,
+  currentLink: null,
+  hoverTimeout: null,
+  
+  // Cache partagé entre toutes les instances
+  cache: new Map(),
+
+  init() {
+    // Délégation d'événements pour performance
+    this.$root.addEventListener('mouseover', this.onMouseOver.bind(this));
+    this.$root.addEventListener('mouseout', this.onMouseOut.bind(this));
+  },
+
+  onMouseOver(event) {
+    const link = event.target.closest('a[href^="/records/"]');
+    if (!link || link === this.currentLink) return;
+    
+    this.schedulePreview(link);
+  },
+
+  onMouseOut(event) {
+    const link = event.target.closest('a[href^="/records/"]');
+    if (!link) return;
+    
+    this.hidePreview();
+  },
+
+  schedulePreview(link) {
+    this.cancelScheduledPreview();
+    this.currentLink = link;
+
+    this.hoverTimeout = setTimeout(() => {
+      this.showPreviewForLink(link);
+    }, this.HOVER_DELAY);
+  },
+
+  cancelScheduledPreview() {
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = null;
+    }
+  },
+
+  async showPreviewForLink(link) {
+    const url = link.getAttribute('href');
+    
+    this.positionPopup(link);
+    
+    // Afficher immédiatement l'état de chargement si pas en cache
+    if (!this.cache.has(url)) {
+      this.displayPreview({ title: '', content: 'Chargement…' });
+    }
+    
+    const data = await this.getRecordData(url);
+    if (!data) return;
+
+    this.displayPreview(data);
+  },
+
+  positionPopup(link) {
+    const rect = link.getBoundingClientRect();
+    this.previewX = rect.left + rect.width / 2;
+    this.previewY = rect.top + window.scrollY - this.PREVIEW_OFFSET_Y;
+  },
+
+  async getRecordData(url) {
+    // Retourner depuis le cache si disponible
+    if (this.cache.has(url)) {
+      return this.cache.get(url);
+    }
+
+    // Fetch et extraire les données
+    try {
+      const html = await this.fetchPage(url);
+      const data = this.parseRecordHTML(html);
+      
+      // Mettre en cache pour réutilisation
+      this.cache.set(url, data);
+      
+      return data;
+    } catch (error) {
+      console.error('Erreur lors du chargement de la preview:', error);
+      return null;
+    }
+  },
+
+  async fetchPage(url) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.text();
+  },
+
+  parseRecordHTML(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    const title = this.extractTitle(doc);
+    const content = this.extractContent(doc);
+
+    return { title, content };
+  },
+
+  extractTitle(doc) {
+    return doc.querySelector('header h1')?.textContent.trim() || '';
+  },
+
+  extractContent(doc) {
+    const mainElement = doc.querySelector('main.prose');
+    if (!mainElement) return '';
+
+    const text = mainElement.textContent.trim();
+    const words = text.split(/\s+/);
+    
+    if (words.length <= this.PREVIEW_WORDS_COUNT) {
+      return text;
+    }
+
+    return words.slice(0, this.PREVIEW_WORDS_COUNT).join(' ') + '…';
+  },
+
+  displayPreview({ title, content }) {
+    this.previewTitle = title;
+    this.previewContent = content;
+    this.showPreview = true;
+  },
+
+  hidePreview() {
+    this.cancelScheduledPreview();
+    this.showPreview = false;
+    this.currentLink = null;
+  },
+}));
+
 Alpine.start();
