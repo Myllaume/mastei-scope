@@ -52,9 +52,11 @@ Alpine.data('search', () => ({
 
   async init() {
     this.items = Array.from(this.$root.querySelectorAll('ul a')).map((item) => {
-      const title = item.textContent.split(' • ').join(' ');
+      const originalText = item.textContent;
+      const title = originalText.split(' • ').join(' ');
       return {
         element: item,
+        originalText: originalText,
         normalizedTitle: this.normalize(title),
       };
     });
@@ -72,12 +74,54 @@ Alpine.data('search', () => ({
 
   filterList() {
     const needle = this.normalize(this.searchTerm);
+
     const len = this.items.length;
 
     for (let i = 0; i < len; i++) {
       const item = this.items[i];
       const shouldHide = needle && !item.normalizedTitle.includes(needle);
       item.element.classList.toggle('hide', shouldHide);
+    }
+
+    if (needle.length > 2) {
+      this.highlightMatches(needle);
+    }
+  },
+
+  highlightMatches(needle) {
+    for (const item of this.items) {
+      if (item.element.classList.contains('hide')) {
+        item.element.textContent = item.originalText;
+        continue;
+      }
+
+      let normalizedText = '',
+        mapping = [];
+
+      for (let j = 0; j < item.originalText.length; j++) {
+        const normalized = this.normalize(item.originalText[j]);
+        mapping.push(...Array(normalized.length).fill(j));
+        normalizedText += normalized;
+      }
+
+      const matchIndex = normalizedText.indexOf(needle);
+      if (matchIndex < 0) continue;
+
+      // Construire le HTML avec <mark>
+      const startPos = mapping[matchIndex];
+      const endPos = mapping[matchIndex + needle.length - 1] + 1;
+      const mark = document.createElement('mark');
+      mark.textContent = item.originalText.substring(startPos, endPos);
+
+      item.element.replaceChildren(
+        ...(startPos
+          ? [document.createTextNode(item.originalText.substring(0, startPos))]
+          : []),
+        mark,
+        ...(endPos < item.originalText.length
+          ? [document.createTextNode(item.originalText.substring(endPos))]
+          : [])
+      );
     }
   },
 }));
