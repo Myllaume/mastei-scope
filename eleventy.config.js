@@ -35,9 +35,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('src/favicon.svg');
   eleventyConfig.addPassthroughCopy('src/favicon.ico');
   eleventyConfig.addPassthroughCopy({
-    'node_modules/fuse.js/dist/fuse.mjs': 'assets/fuse.mjs',
-  });
-  eleventyConfig.addPassthroughCopy({
     'node_modules/alpinejs/dist/module.esm.min.js': 'assets/alpine.mjs',
   });
 
