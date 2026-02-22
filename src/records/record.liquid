@@ -87,7 +87,8 @@ eleventyComputed:
       </section>
     {% endif %}
 
-    {% if record.deepLinks.size > 0 %}
+    {% assign deepTreeSvg = record | deepLinksTree %}
+    {% if deepTreeSvg != "" %}
     <section>
       <details>
         {% assign totalDeepLinks = 0 %}
@@ -96,17 +97,7 @@ eleventyComputed:
         {% endfor %}
 
         <summary>Liens profonds ({{ totalDeepLinks }})</summary>
-        <ol>
-        {% for depth in record.deepLinks %}
-          <li>
-            <ul>
-              {% for record in depth %}
-              <li><a href="/records/{{ record.id }}/">{{ record.title | frenchQuotes }}</a></li>
-              {% endfor %}
-            </ul>
-          </li>
-          {% endfor %}
-        </ol>
+        {{ deepTreeSvg }}
       </details>
     </section>
     {% endif %}

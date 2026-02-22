@@ -108,3 +108,14 @@ u {
   max-width: 320px;
   min-width: 240px;
 }
+
+/* Deep links tree */
+.deep-links-tree {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font: 11px monospace;
+}
+.deep-links-tree a:hover text {
+  text-decoration: underline;
+}

@@ -744,7 +744,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-hierarchy@npm:3":
+"d3-hierarchy@npm:3, d3-hierarchy@npm:^3.1.2":
   version: 3.1.2
   resolution: "d3-hierarchy@npm:3.1.2"
   checksum: 10c0/6dcdb480539644aa7fc0d72dfc7b03f99dfbcdf02714044e8c708577e0d5981deb9d3e99bbbb2d26422b55bcc342ac89a0fa2ea6c9d7302e2fc0951dd96f89cf
@@ -1282,6 +1282,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"graphology-indices@npm:^0.17.0":
+  version: 0.17.0
+  resolution: "graphology-indices@npm:0.17.0"
+  dependencies:
+    graphology-utils: "npm:^2.4.2"
+    mnemonist: "npm:^0.39.0"
+  peerDependencies:
+    graphology-types: ">=0.20.0"
+  checksum: 10c0/e951b3c338539080567859b9e6cc0f9a35d3d0ed5597e3331fa84469d8a1ba629adf46a81f48d883a904804199f031a2abd1973b7e67fed59cc2f7987fd5e467
+  languageName: node
+  linkType: hard
+
 "graphology-layout-forceatlas2@npm:^0.10.1":
   version: 0.10.1
   resolution: "graphology-layout-forceatlas2@npm:0.10.1"
@@ -1316,7 +1328,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphology-utils@npm:^2.1.0, graphology-utils@npm:^2.3.0":
+"graphology-traversal@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "graphology-traversal@npm:0.3.1"
+  dependencies:
+    graphology-indices: "npm:^0.17.0"
+    graphology-utils: "npm:^2.0.0"
+  peerDependencies:
+    graphology-types: ">=0.20.0"
+  checksum: 10c0/7332e780e053a7ed73ee8e03d480010eb179a16551130c053dd10d9a1790645d37d9f3ce4727945315e5247bb6ffbeedf3964fb8eff2b2c0b7bb9ff7272670a9
+  languageName: node
+  linkType: hard
+
+"graphology-utils@npm:^2.0.0, graphology-utils@npm:^2.1.0, graphology-utils@npm:^2.3.0, graphology-utils@npm:^2.4.2":
   version: 2.5.2
   resolution: "graphology-utils@npm:2.5.2"
   peerDependencies:
@@ -1710,10 +1734,12 @@ __metadata:
     alpinejs: "npm:^3.15.4"
     clean-css-cli: "npm:^5.6.3"
     d3: "npm:^7.9.0"
+    d3-hierarchy: "npm:^3.1.2"
     graphology: "npm:^0.26.0"
     graphology-layout: "npm:^0.6.1"
     graphology-layout-forceatlas2: "npm:^0.10.1"
     graphology-layout-noverlap: "npm:^0.4.2"
+    graphology-traversal: "npm:^0.3.1"
     html-minifier-terser: "npm:^7.2.0"
     markdown-it-anchor: "npm:^9.2.0"
     markdown-it-table-of-contents: "npm:^1.1.0"
@@ -1868,7 +1894,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mnemonist@npm:^0.39.2":
+"mnemonist@npm:^0.39.0, mnemonist@npm:^0.39.2":
   version: 0.39.8
   resolution: "mnemonist@npm:0.39.8"
   dependencies:

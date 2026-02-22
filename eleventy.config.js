@@ -4,6 +4,8 @@ import markdownItToc from 'markdown-it-table-of-contents';
 import htmlmin from 'html-minifier-terser';
 import fs from 'node:fs';
 import path from 'node:path';
+import Graph from 'graphology';
+import { hierarchy, tree as d3tree } from 'd3-hierarchy';
 
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -329,6 +331,119 @@ export default function (eleventyConfig) {
       });
     }
     return content;
+  });
+
+  // --- Deep Links Tree (d3-hierarchy, server-side SVG) ---
+
+  let _deepLinksGraph = null;
+  function getDeepLinksGraph() {
+    if (!_deepLinksGraph) {
+      const raw = JSON.parse(fs.readFileSync('src/_data/graph.json', 'utf8'));
+      _deepLinksGraph = new Graph();
+      _deepLinksGraph.import(raw);
+    }
+    return _deepLinksGraph;
+  }
+
+  function escapeHtml(text) {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function buildBfsTree(graph, rootId, maxDepth = 3) {
+    if (!graph.hasNode(rootId)) return null;
+
+    const visited = new Set([rootId]);
+    const root = {
+      id: rootId,
+      title: graph.getNodeAttribute(rootId, 'title'),
+      children: [],
+    };
+    let frontier = [root];
+
+    for (let d = 0; d < maxDepth; d++) {
+      const next = [];
+      for (const parent of frontier) {
+        graph.forEachNeighbor(parent.id, (neighborId) => {
+          if (visited.has(neighborId)) return;
+          visited.add(neighborId);
+          const child = {
+            id: neighborId,
+            title: graph.getNodeAttribute(neighborId, 'title'),
+            children: [],
+          };
+          parent.children.push(child);
+          next.push(child);
+        });
+      }
+      frontier = next;
+    }
+
+    return root;
+  }
+
+  eleventyConfig.addFilter('deepLinksTree', function (record) {
+    const graph = getDeepLinksGraph();
+    const treeData = buildBfsTree(graph, record.id);
+    if (!treeData || treeData.children.length === 0) return '';
+
+    const root = hierarchy(treeData);
+    const dx = 18;
+    const dy = 180;
+    const layout = d3tree().nodeSize([dx, dy]);
+    layout(root);
+
+    // Shift all nodes so root lands at (0, 0)
+    const offsetX = root.x;
+    const offsetY = root.y;
+    root.each((d) => {
+      d.x -= offsetX;
+      d.y -= offsetY;
+    });
+
+    let x0 = Infinity,
+      x1 = -Infinity;
+    let y1 = -Infinity;
+    root.each((d) => {
+      if (d.x < x0) x0 = d.x;
+      if (d.x > x1) x1 = d.x;
+      if (d.y > y1) y1 = d.y;
+    });
+
+    const marginTop = dx;
+    const marginBottom = dx;
+    const marginRight = 160;
+    const h = x1 - x0 + marginTop + marginBottom;
+    const w = y1 - dy + marginRight; // start from depth-1 column
+
+    let svg = `<svg viewBox="${dy} ${x0 - marginTop} ${w} ${h}" xmlns="http://www.w3.org/2000/svg" class="deep-links-tree">`;
+
+    // Links — skip edges from root (depth 0 → depth 1)
+    for (const link of root.links()) {
+      if (link.source.depth === 0) continue;
+      svg += `<path d="M${link.source.y},${link.source.x}C${(link.source.y + link.target.y) / 2},${link.source.x} ${(link.source.y + link.target.y) / 2},${link.target.x} ${link.target.y},${link.target.x}" fill="none" stroke="var(--color-border, #ccc)" stroke-width="1"/>`;
+    }
+
+    // Nodes — skip root
+    for (const node of root.descendants()) {
+      if (node.depth === 0) continue;
+      const hasChildren = node.children && node.children.length > 0;
+      svg += `<g transform="translate(${node.y},${node.x})">`;
+      svg += `<circle r="2.5" fill="currentColor"/>`;
+      svg += `<a href="/records/${node.data.id}/">`;
+      if (hasChildren) {
+        svg += `<text x="-6" dy="0.32em" text-anchor="end" fill="currentColor">${escapeHtml(node.data.title)}</text>`;
+      } else {
+        svg += `<text x="6" dy="0.32em" fill="currentColor">${escapeHtml(node.data.title)}</text>`;
+      }
+      svg += `</a></g>`;
+    }
+
+    svg += '</svg>';
+    return svg;
   });
 
   // Configurer la bibliothèque markdown
