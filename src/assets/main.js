@@ -300,7 +300,7 @@ Alpine.data('recordPreview', () => ({
   HOVER_DELAY: 300,
   PREVIEW_WORDS_COUNT: 30,
   PREVIEW_OFFSET_Y: 10,
-  
+
   // État
   showPreview: false,
   previewTitle: '',
@@ -309,7 +309,7 @@ Alpine.data('recordPreview', () => ({
   previewY: 0,
   currentLink: null,
   hoverTimeout: null,
-  
+
   // Cache partagé entre toutes les instances
   cache: new Map(),
 
@@ -322,14 +322,14 @@ Alpine.data('recordPreview', () => ({
   onMouseOver(event) {
     const link = event.target.closest('a[href^="/records/"]');
     if (!link || link === this.currentLink) return;
-    
+
     this.schedulePreview(link);
   },
 
   onMouseOut(event) {
     const link = event.target.closest('a[href^="/records/"]');
     if (!link) return;
-    
+
     this.hidePreview();
   },
 
@@ -351,14 +351,14 @@ Alpine.data('recordPreview', () => ({
 
   async showPreviewForLink(link) {
     const url = link.getAttribute('href');
-    
+
     this.positionPopup(link);
-    
+
     // Afficher immédiatement l'état de chargement si pas en cache
     if (!this.cache.has(url)) {
       this.displayPreview({ title: '', content: 'Chargement…' });
     }
-    
+
     const data = await this.getRecordData(url);
     if (!data) return;
 
@@ -381,10 +381,10 @@ Alpine.data('recordPreview', () => ({
     try {
       const html = await this.fetchPage(url);
       const data = this.parseRecordHTML(html);
-      
+
       // Mettre en cache pour réutilisation
       this.cache.set(url, data);
-      
+
       return data;
     } catch (error) {
       console.error('Erreur lors du chargement de la preview:', error);
@@ -418,7 +418,7 @@ Alpine.data('recordPreview', () => ({
 
     const text = mainElement.textContent.trim();
     const words = text.split(/\s+/);
-    
+
     if (words.length <= this.PREVIEW_WORDS_COUNT) {
       return text;
     }
