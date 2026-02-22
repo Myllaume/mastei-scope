@@ -19,7 +19,7 @@ eleventyComputed:
 
   <ul>
   {% for quote in book.quotes %}
-    <li>
+    <li id="{{ quote.locator | remove: "p." }}">
       <p class="toto">{{ quote.locator }}</p>
       <ul>
         {% for record in quote.records %}

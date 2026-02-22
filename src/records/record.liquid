@@ -143,7 +143,7 @@ eleventyComputed:
           <ul>
             {%- for ref in record.onSamePage -%}
               <li>
-                {{ ref.bookKey }}
+                <a href="/books/{{ ref.bookKey | replace_first: " p.", "#" }}">{{ ref.bookKey }}</a>
                 <ul>
                   {%- for r in ref.records -%}
                   <li><a href="/records/{{ r.id }}">{{ r.title | frenchQuotes }}</a></li>
