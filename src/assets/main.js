@@ -76,9 +76,9 @@ Alpine.data('search', () => ({
     const needle = this.normalize(this.searchTerm);
 
     if (needle.length < 2) {
+      CSS.highlights.delete('search');
       this.items.forEach((item) => {
         item.element.classList.remove('hide');
-        item.element.textContent = item.originalText;
       });
       return;
     }
@@ -95,11 +95,11 @@ Alpine.data('search', () => ({
   },
 
   highlightMatches(needle) {
+    CSS.highlights.delete('search');
+    const ranges = [];
+
     for (const item of this.items) {
-      if (item.element.classList.contains('hide')) {
-        item.element.textContent = item.originalText;
-        continue;
-      }
+      if (item.element.classList.contains('hide')) continue;
 
       let normalizedText = '',
         mapping = [];
@@ -113,21 +113,20 @@ Alpine.data('search', () => ({
       const matchIndex = normalizedText.indexOf(needle);
       if (matchIndex < 0) continue;
 
-      // Construire le HTML avec <mark>
       const startPos = mapping[matchIndex];
       const endPos = mapping[matchIndex + needle.length - 1] + 1;
-      const mark = document.createElement('mark');
-      mark.textContent = item.originalText.substring(startPos, endPos);
 
-      item.element.replaceChildren(
-        ...(startPos
-          ? [document.createTextNode(item.originalText.substring(0, startPos))]
-          : []),
-        mark,
-        ...(endPos < item.originalText.length
-          ? [document.createTextNode(item.originalText.substring(endPos))]
-          : [])
-      );
+      const textNode = item.element.firstChild;
+      if (!textNode || textNode.nodeType !== Node.TEXT_NODE) continue;
+
+      const range = new Range();
+      range.setStart(textNode, startPos);
+      range.setEnd(textNode, endPos);
+      ranges.push(range);
+    }
+
+    if (ranges.length > 0) {
+      CSS.highlights.set('search', new Highlight(...ranges));
     }
   },
 }));
